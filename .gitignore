@@ -7,14 +7,14 @@ cmake_install.cmake
 # IDEs
 .vscode/
 vs/.vs/
-vs/commandcenter
+vs/Khala
 
-bin/CommandCenter
+bin/Khala
 bin/*.exe
 bin/*.ilk
 bin/TechTree.json
 *.tlog
 *.obj
-vs/RelWithDebInfo/CommandCenter.log
+vs/RelWithDebInfo/Khala.log
 *.log
 *.pdb

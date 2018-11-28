@@ -1,8 +1,9 @@
 {
     "Bot Info" :
     {
-        "BotName"                   : "CommandCenter",
-        "Authors"                   : "David Churchill",
+        "BotName"                   : "Khala",
+        "Authors"                   : "Alex Frost",
+        "email"                     : "gistrec@mail.ru",
         "PrintInfoOnStart"          : false
     },
     

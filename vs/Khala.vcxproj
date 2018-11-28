@@ -101,7 +101,7 @@
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
-    <ProjectName>CommandCenter</ProjectName>
+    <ProjectName>Khala</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -164,8 +164,8 @@
     <IncludePath>$(SolutionDir)..\..\s2client-api\project\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Libraries\BWAPI_420\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Libraries\BWAPI_420\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\BWAPI_420\lib;$(LibraryPath); C:\Users\Alex\Desktop\Разработка\s2client-api\project\lib;</LibraryPath>
+    <IncludePath>C:\Libraries\BWAPI_420\include;$(IncludePath); C:\Users\Alex\Desktop\Разработка\s2client-apiproject\include\;</IncludePath>
     <IntDir>$(SolutionName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(ProjectDir)/../bin/</OutDir>
   </PropertyGroup>
@@ -174,8 +174,8 @@
     <IncludePath>$(SolutionDir)..\..\s2client-api\project\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>C:\Libraries\BWAPI_420\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Libraries\BWAPI_420\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\BWAPI_420\lib;$(LibraryPath); C:\Users\Alex\Desktop\Разработка\s2client-api\project\lib;</LibraryPath>
+    <IncludePath>C:\Libraries\BWAPI_420\include;$(IncludePath); C:\Users\Alex\Desktop\Разработка\s2client-apiproject\include\;</IncludePath>
     <OutDir>$(ProjectDir)/../bin/</OutDir>
     <IntDir>$(SolutionName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
