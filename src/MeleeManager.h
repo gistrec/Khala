@@ -3,14 +3,14 @@
 #include "Common.h"
 #include "MicroManager.h"
 
-class CCBot;
+class Bot;
 
 class MeleeManager: public MicroManager
 {
 
 public:
 
-    MeleeManager(CCBot & bot);
+    MeleeManager(Bot & bot);
     void    executeMicro(const std::vector<Unit> & targets);
     void    assignTargets(const std::vector<Unit> & targets);
     int     getAttackPriority(Unit attacker, const Unit & unit);

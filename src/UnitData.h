@@ -10,12 +10,12 @@ struct UnitInfo
     // we need to store all of this data because if the unit is not visible, we
     // can't reference it from the unit pointer
 
-    CCUnitID        id;
-    CCHealth        lastHealth;
-    CCHealth        lastShields;
-    CCPlayer        player;
+    UnitID        id;
+    Health        lastHealth;
+    Health        lastShields;
+    Player        player;
     Unit            unit;
-    CCPosition      lastPosition;
+    Position      lastPosition;
     UnitType        type;
     float           progress;
 

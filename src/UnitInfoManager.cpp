@@ -1,11 +1,11 @@
 #include "UnitInfoManager.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Unit.h"
 
 #include <sstream>
 
-UnitInfoManager::UnitInfoManager(CCBot & bot)
+UnitInfoManager::UnitInfoManager(Bot & bot)
     : m_bot(bot)
 {
 
@@ -44,12 +44,12 @@ void UnitInfoManager::updateUnitInfo()
 	checkPositions(Players::Enemy);
 }
 
-const std::map<Unit, UnitInfo> & UnitInfoManager::getUnitInfoMap(CCPlayer player) const
+const std::map<Unit, UnitInfo> & UnitInfoManager::getUnitInfoMap(Player player) const
 {
     return getUnitData(player).getUnitInfoMap();
 }
 
-const std::vector<Unit> & UnitInfoManager::getUnits(CCPlayer player) const
+const std::vector<Unit> & UnitInfoManager::getUnits(Player player) const
 {
     BOT_ASSERT(m_units.find(player) != m_units.end(), "Couldn't find player units: %d", player);
 
@@ -106,7 +106,7 @@ void UnitInfoManager::drawSelectedUnitDebugInfo()
 //            debug_txt += GetAbilityText(ability.ability_id) + "\n";
 //        }
 //    }
-//    m_bot.Map().drawText(unit->pos, debug_txt, CCColor(0, 255, 0));
+//    m_bot.Map().drawText(unit->pos, debug_txt, Color(0, 255, 0));
 //
 //    // Show the direction of the unit.
 //    sc2::Point3D p1; // Use this to show target distance.
@@ -118,7 +118,7 @@ void UnitInfoManager::drawSelectedUnitDebugInfo()
 //        assert(unit->facing >= 0.0f && unit->facing < 6.29f);
 //        p1.x += length * std::cos(unit->facing);
 //        p1.y += length * std::sin(unit->facing);
-//        m_bot.Map().drawLine(p0, p1, CCColor(255, 255, 0));
+//        m_bot.Map().drawLine(p0, p1, Color(255, 255, 0));
 //    }
 //
 //    // Box around the unit.
@@ -131,14 +131,14 @@ void UnitInfoManager::drawSelectedUnitDebugInfo()
 //        p_max.x += 2.0f;
 //        p_max.y += 2.0f;
 //        p_max.z += 2.0f;
-//        m_bot.Map().drawBox(p_min, p_max, CCColor(0, 0, 255));
+//        m_bot.Map().drawBox(p_min, p_max, Color(0, 0, 255));
 //    }
 //
 //    // Sphere around the unit.
 //    {
 //        sc2::Point3D p = unit->pos;
 //        p.z += 0.1f; // Raise the line off the ground a bit so it renders more clearly.
-//        m_bot.Map().drawCircle(p, 1.25f, CCColor(255, 0, 255));
+//        m_bot.Map().drawCircle(p, 1.25f, Color(255, 0, 255));
 //    }
 //
 //    // Pathing query to get the target.
@@ -174,13 +174,13 @@ void UnitInfoManager::drawSelectedUnitDebugInfo()
 //    {
 //        sc2::Point3D p = target;
 //        p.z += 0.1f; // Raise the line off the ground a bit so it renders more clearly.
-//        m_bot.Map().drawCircle(target, 1.25f, CCColor(0, 0, 255));
-//        m_bot.Map().drawText(p1, target_info, CCColor(255, 255, 0));
+//        m_bot.Map().drawCircle(target, 1.25f, Color(0, 0, 255));
+//        m_bot.Map().drawText(p1, target_info, Color(255, 255, 0));
 //    }
 }
 
 // passing in a unit type of 0 returns a count of all units
-size_t UnitInfoManager::getUnitTypeCount(CCPlayer player, UnitType type, bool completed) const
+size_t UnitInfoManager::getUnitTypeCount(Player player, UnitType type, bool completed) const
 {
     size_t count = 0;
 
@@ -195,7 +195,7 @@ size_t UnitInfoManager::getUnitTypeCount(CCPlayer player, UnitType type, bool co
     return count;
 }
 
-size_t UnitInfoManager::getUnitTypeCount(CCPlayer player, std::vector<UnitType> types, bool completed) const
+size_t UnitInfoManager::getUnitTypeCount(Player player, std::vector<UnitType> types, bool completed) const
 {
 	size_t count = 0;
 	for (auto & unit : getUnits(player))
@@ -218,12 +218,12 @@ void UnitInfoManager::drawUnitInformation() const
 	{
 		for (auto & kv : getUnitData(Players::Enemy).getUnitInfoMap())
 		{
-			if (CCPosition()==kv.second.lastPosition)
+			if (Position()==kv.second.lastPosition)
 			{
 				continue;
 			}
 			m_bot.Map().drawCircle(kv.second.lastPosition, kv.first.getUnitPtr()->radius,sc2::Colors::Red);
-			m_bot.Map().drawText(kv.second.lastPosition - CCPosition(0.0f, kv.first.getUnitPtr()->radius), sc2::UnitTypeToName(kv.second.type.getAPIUnitType()));
+			m_bot.Map().drawText(kv.second.lastPosition - Position(0.0f, kv.first.getUnitPtr()->radius), sc2::UnitTypeToName(kv.second.type.getAPIUnitType()));
 		}
 	}
 	if (m_bot.Config().DrawSelfUnitInfo)
@@ -231,7 +231,7 @@ void UnitInfoManager::drawUnitInformation() const
 		for (auto & kv : getUnitData(Players::Self).getUnitInfoMap())
 		{
 			m_bot.Map().drawCircle(kv.second.lastPosition, kv.first.getUnitPtr()->radius, sc2::Colors::Green);
-			m_bot.Map().drawText(kv.second.lastPosition - CCPosition(0.0f, kv.first.getUnitPtr()->radius), sc2::UnitTypeToName(kv.second.type.getAPIUnitType()));
+			m_bot.Map().drawText(kv.second.lastPosition - Position(0.0f, kv.first.getUnitPtr()->radius), sc2::UnitTypeToName(kv.second.type.getAPIUnitType()));
 		}
 	}
 
@@ -281,7 +281,7 @@ bool UnitInfoManager::isValidUnit(const Unit & unit)
     return true;
 }
 
-void UnitInfoManager::getNearbyForce(std::vector<UnitInfo> & unitInfo, CCPosition p, int player, float radius) const
+void UnitInfoManager::getNearbyForce(std::vector<UnitInfo> & unitInfo, Position p, int player, float radius) const
 {
     bool hasBunker = false;
     // for each unit we know about for that player
@@ -299,7 +299,7 @@ void UnitInfoManager::getNearbyForce(std::vector<UnitInfo> & unitInfo, CCPositio
     }
 }
 
-const UnitData & UnitInfoManager::getUnitData(CCPlayer player) const
+const UnitData & UnitInfoManager::getUnitData(Player player) const
 {
     return m_unitData.find(player)->second;
 }

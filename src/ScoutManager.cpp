@@ -1,8 +1,8 @@
 #include "ScoutManager.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Util.h"
 
-ScoutManager::ScoutManager(CCBot & bot)
+ScoutManager::ScoutManager(Bot & bot)
     : m_bot             (bot)
     , m_scoutUnit       ()
     , m_numScouts       (0)
@@ -53,7 +53,7 @@ void ScoutManager::moveScouts()
     auto workerScout = m_scoutUnit;
     if (!workerScout.isValid()) { return; }
 
-    CCHealth scoutHP = workerScout.getTotalHealth();
+    Health scoutHP = workerScout.getTotalHealth();
 
     // get the enemy base location, if we have one
     const BaseLocation * enemyBaseLocation = m_bot.Bases().getPlayerStartingBaseLocation(Players::Enemy);
@@ -144,7 +144,7 @@ void ScoutManager::moveScouts()
     m_previousScoutHP = scoutHP;
 }
 
-Unit ScoutManager::closestEnemyWorkerTo(const CCPosition & pos) const
+Unit ScoutManager::closestEnemyWorkerTo(const Position & pos) const
 {
     if (!m_scoutUnit.isValid()) { return Unit(); }
 
@@ -168,7 +168,7 @@ Unit ScoutManager::closestEnemyWorkerTo(const CCPosition & pos) const
 
     return enemyWorker;
 }
-bool ScoutManager::enemyWorkerInRadiusOf(const CCPosition & pos) const
+bool ScoutManager::enemyWorkerInRadiusOf(const Position & pos) const
 {
     for (auto & unit : m_bot.UnitInfo().getUnits(Players::Enemy))
     {
@@ -181,7 +181,7 @@ bool ScoutManager::enemyWorkerInRadiusOf(const CCPosition & pos) const
     return false;
 }
 
-CCPosition ScoutManager::getFleePosition() const
+Position ScoutManager::getFleePosition() const
 {
     // TODO: make this follow the perimeter of the enemy base again, but for now just use home base as flee direction
     return m_bot.GetStartLocation();

@@ -6,7 +6,7 @@ SquadOrder::SquadOrder()
 {
 }
 
-SquadOrder::SquadOrder(int type, const CCPosition & position, float radius, std::string status)
+SquadOrder::SquadOrder(int type, const Position & position, float radius, std::string status)
     : m_type    (type)
     , m_position(position)
     , m_radius  (radius)
@@ -19,7 +19,7 @@ const std::string & SquadOrder::getStatus() const
     return m_status;
 }
 
-const CCPosition & SquadOrder::getPosition() const
+const Position & SquadOrder::getPosition() const
 {
     return m_position;
 }

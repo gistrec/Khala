@@ -4,11 +4,11 @@
 #include "Squad.h"
 #include "SquadData.h"
 
-class CCBot;
+class Bot;
 
 class CombatCommander
 {
-    CCBot &         m_bot;
+    Bot &         m_bot;
 
     SquadData       m_squadData;
     std::vector<Unit>  m_combatUnits;
@@ -21,17 +21,17 @@ class CombatCommander
     void            updateIdleSquad();
     bool            isSquadUpdateFrame();
 
-    Unit            findClosestDefender(const Squad & defenseSquad, const CCPosition & pos);
-    Unit            findClosestWorkerTo(std::vector<Unit> & unitsToAssign, const CCPosition & target);
+    Unit            findClosestDefender(const Squad & defenseSquad, const Position & pos);
+    Unit            findClosestWorkerTo(std::vector<Unit> & unitsToAssign, const Position & target);
 
-    CCPosition      getMainAttackLocation();
+    Position      getMainAttackLocation();
 
     void            updateDefenseSquadUnits(Squad & defenseSquad, const size_t & flyingDefendersNeeded, const size_t & groundDefendersNeeded);
     bool            shouldWeStartAttacking();
 
 public:
 
-    CombatCommander(CCBot & bot);
+    CombatCommander(Bot & bot);
 
 
     void onStart();

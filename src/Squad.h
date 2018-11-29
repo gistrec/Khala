@@ -5,11 +5,11 @@
 #include "RangedManager.h"
 #include "SquadOrder.h"
 
-class CCBot;
+class Bot;
 
 class Squad
 {
-    CCBot &             m_bot;
+    Bot &             m_bot;
 
     std::string         m_name;
     std::set<Unit> m_units;
@@ -33,12 +33,12 @@ class Squad
 
     bool isUnitNearEnemy(const Unit & unit) const;
     bool needsToRegroup() const;
-    int  squadUnitsNear(const CCPosition & pos) const;
+    int  squadUnitsNear(const Position & pos) const;
 
 public:
 
-    Squad(const std::string & name, const SquadOrder & order, size_t priority, CCBot & bot);
-    Squad(CCBot & bot);
+    Squad(const std::string & name, const SquadOrder & order, size_t priority, Bot & bot);
+    Squad(Bot & bot);
 
     void onFrame();
     void setSquadOrder(const SquadOrder & so);
@@ -52,8 +52,8 @@ public:
     void setPriority(const size_t & priority);
     const std::string & getName() const;
 
-    CCPosition calcCenter() const;
-    CCPosition calcRegroupPosition() const;
+    Position calcCenter() const;
+    Position calcRegroupPosition() const;
 
     const std::set<Unit> & getUnits() const;
     const SquadOrder & getSquadOrder() const;

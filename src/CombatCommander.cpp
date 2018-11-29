@@ -1,6 +1,6 @@
 #include "CombatCommander.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 
 const size_t IdlePriority = 0;
 const size_t AttackPriority = 1;
@@ -8,7 +8,7 @@ const size_t BaseDefensePriority = 2;
 const size_t ScoutDefensePriority = 3;
 const size_t DropPriority = 4;
 
-CombatCommander::CombatCommander(CCBot & bot)
+CombatCommander::CombatCommander(Bot & bot)
     : m_bot(bot)
     , m_squadData(bot)
     , m_initialized(false)
@@ -25,7 +25,7 @@ void CombatCommander::onStart()
     m_squadData.addSquad("Idle", Squad("Idle", idleOrder, IdlePriority, m_bot));
 
     // the main attack squad that will pressure the enemy's closest base location
-    SquadOrder mainAttackOrder(SquadOrderTypes::Attack, CCPosition(0, 0), 25, "Attack Enemy Base");
+    SquadOrder mainAttackOrder(SquadOrderTypes::Attack, Position(0, 0), 25, "Attack Enemy Base");
     m_squadData.addSquad("MainAttack", Squad("MainAttack", mainAttackOrder, AttackPriority, m_bot));
 
     // the scout defense squad will handle chasing the enemy worker scout
@@ -185,7 +185,7 @@ void CombatCommander::updateDefenseSquads()
             continue;
         }
 
-        CCPosition basePosition = myBaseLocation->getPosition();
+        Position basePosition = myBaseLocation->getPosition();
 
         // start off assuming all enemy units in region are just workers
         int numDefendersPerEnemyUnit = 2;
@@ -339,7 +339,7 @@ void CombatCommander::updateDefenseSquadUnits(Squad & defenseSquad, const size_t
     }
 }
 
-Unit CombatCommander::findClosestDefender(const Squad & defenseSquad, const CCPosition & pos)
+Unit CombatCommander::findClosestDefender(const Squad & defenseSquad, const Position & pos)
 {
     Unit closestDefender;
     float minDistance = std::numeric_limits<float>::max();
@@ -372,14 +372,14 @@ void CombatCommander::drawSquadInformation()
     m_squadData.drawSquadInformation();
 }
 
-CCPosition CombatCommander::getMainAttackLocation()
+Position CombatCommander::getMainAttackLocation()
 {
     const BaseLocation * enemyBaseLocation = m_bot.Bases().getPlayerStartingBaseLocation(Players::Enemy);
 
     // First choice: Attack an enemy region if we can see units inside it
     if (enemyBaseLocation)
     {
-        CCPosition enemyBasePosition = enemyBaseLocation->getPosition();
+        Position enemyBasePosition = enemyBaseLocation->getPosition();
 
         // If the enemy base hasn't been seen yet, go there.
         if (!m_bot.Map().isExplored(enemyBasePosition))
@@ -423,7 +423,7 @@ CCPosition CombatCommander::getMainAttackLocation()
     return Util::GetPosition(m_bot.Map().getLeastRecentlySeenTile());
 }
 
-Unit CombatCommander::findClosestWorkerTo(std::vector<Unit> & unitsToAssign, const CCPosition & target)
+Unit CombatCommander::findClosestWorkerTo(std::vector<Unit> & unitsToAssign, const Position & target)
 {
     Unit closestMineralWorker;
     float closestDist = std::numeric_limits<float>::max();

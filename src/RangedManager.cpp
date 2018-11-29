@@ -1,8 +1,8 @@
 #include "RangedManager.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 
-RangedManager::RangedManager(CCBot & bot)
+RangedManager::RangedManager(Bot & bot)
     : MicroManager(bot)
 {
 

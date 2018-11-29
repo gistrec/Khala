@@ -6,11 +6,11 @@
 #include "ScoutManager.h"
 #include "CombatCommander.h"
 
-class CCBot;
+class Bot;
 
 class GameCommander
 {
-    CCBot &                 m_bot;
+    Bot &                 m_bot;
     Timer                   m_timer;
 
     ProductionManager       m_productionManager;
@@ -28,7 +28,7 @@ class GameCommander
 
 public:
 
-    GameCommander(CCBot & bot);
+    GameCommander(Bot & bot);
 
     void onStart();
     void onFrame();

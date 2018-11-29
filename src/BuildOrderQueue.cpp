@@ -1,7 +1,7 @@
 #include "BuildOrderQueue.h"
-#include "CCBot.h"
+#include "Bot.h"
 
-BuildOrderQueue::BuildOrderQueue(CCBot & bot)
+BuildOrderQueue::BuildOrderQueue(Bot & bot)
     : m_bot(bot)
     , m_highestPriority(0)
     , m_lowestPriority(0)

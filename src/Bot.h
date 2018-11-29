@@ -14,7 +14,7 @@
 #include "MetaType.h"
 #include "Unit.h"
 
-class CCBot : public sc2::Agent 
+class Bot : public sc2::Agent 
 {
     MapTools                m_map;
     BaseLocationManager     m_bases;
@@ -26,7 +26,7 @@ class CCBot : public sc2::Agent
     GameCommander           m_gameCommander;
 
     std::vector<Unit>       m_allUnits;
-    std::vector<CCPosition> m_baseLocations;
+    std::vector<Position> m_baseLocations;
 
     void setUnits();
 
@@ -35,7 +35,7 @@ class CCBot : public sc2::Agent
 
 public:
 
-    CCBot();
+    Bot();
 
     void OnGameStart() override;
     void OnStep() override;
@@ -47,18 +47,18 @@ public:
     const UnitInfoManager & UnitInfo() const;
     const StrategyManager & Strategy() const;
     const TypeData & Data(const UnitType & type) const;
-    const TypeData & Data(const CCUpgrade & type) const;
+    const TypeData & Data(const UpgradeID & type) const;
     const TypeData & Data(const MetaType & type) const;
     const TypeData & Data(const Unit & unit) const;
-    CCRace GetPlayerRace(int player) const;
-    CCPosition GetStartLocation() const;
+    Race GetPlayerRace(int player) const;
+    Position GetStartLocation() const;
 
     int GetCurrentFrame() const;
     int GetMinerals() const;
     int GetCurrentSupply() const;
     int GetMaxSupply() const;
     int GetGas() const;
-    Unit GetUnit(const CCUnitID & tag) const;
+    Unit GetUnit(const UnitID & tag) const;
     const std::vector<Unit> & GetUnits() const;
-    const std::vector<CCPosition> & GetStartLocations() const;
+    const std::vector<Position> & GetStartLocations() const;
 };

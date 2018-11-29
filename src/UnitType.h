@@ -2,11 +2,11 @@
 
 #include "Common.h"
 
-class CCBot;
+class Bot;
 
 class UnitType
 {
-    mutable CCBot * m_bot;
+    mutable Bot * m_bot;
     
     sc2::UnitTypeID m_type;
 
@@ -14,7 +14,7 @@ public:
 
     UnitType();
 
-    UnitType(const sc2::UnitTypeID & type, CCBot & bot);
+    UnitType(const sc2::UnitTypeID & type, Bot & bot);
     sc2::UnitTypeID getAPIUnitType() const;
     bool is(const sc2::UnitTypeID & type) const;
 
@@ -23,7 +23,7 @@ public:
 	bool operator!=(const UnitType & rhs) const;
 
     std::string getName() const;
-    CCRace getRace() const;
+    Race getRace() const;
     
     bool isValid() const;
     bool isBuilding() const;
@@ -39,7 +39,7 @@ public:
     bool canAttack() const;
     bool canMove() const;
     bool isAddon() const;
-    CCPositionType getAttackRange() const;
+    PositionType getAttackRange() const;
     int tileWidth() const;
     int tileHeight() const;
     int supplyProvided() const;
@@ -49,7 +49,7 @@ public:
 
     const std::vector<UnitType> & whatBuilds() const;
 
-    static UnitType GetUnitTypeFromName(const std::string & name, CCBot & bot);
+    static UnitType GetUnitTypeFromName(const std::string & name, Bot & bot);
 
     // lazy functions to let me know if this type is a special type
     bool isOverlord() const;

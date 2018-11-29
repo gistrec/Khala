@@ -1,7 +1,7 @@
-#include "CCBot.h"
+#include "Bot.h"
 #include "Util.h"
 
-CCBot::CCBot()
+Bot::Bot()
     : m_map(*this)
     , m_bases(*this)
     , m_unitInfo(*this)
@@ -13,7 +13,7 @@ CCBot::CCBot()
     
 }
 
-void CCBot::OnGameStart() 
+void Bot::OnGameStart() 
 {
     m_config.readConfigFile();
 
@@ -35,7 +35,7 @@ void CCBot::OnGameStart()
     m_gameCommander.onStart();
 }
 
-void CCBot::OnStep()
+void Bot::OnStep()
 {
     setUnits();
     m_map.onFrame();
@@ -51,7 +51,7 @@ void CCBot::OnStep()
 #endif
 }
 
-void CCBot::setUnits()
+void Bot::setUnits()
 {
     m_allUnits.clear();
     Control()->GetObservation();
@@ -62,7 +62,7 @@ void CCBot::setUnits()
 
 }
 
-CCRace CCBot::GetPlayerRace(int player) const
+Race Bot::GetPlayerRace(int player) const
 {
     auto playerID = Observation()->GetPlayerID();
     for (auto & playerInfo : Observation()->GetGameInfo().player_info)
@@ -77,102 +77,102 @@ CCRace CCBot::GetPlayerRace(int player) const
     return sc2::Race::Random;
 }
 
-BotConfig & CCBot::Config()
+BotConfig & Bot::Config()
 {
      return m_config;
 }
 
-const MapTools & CCBot::Map() const
+const MapTools & Bot::Map() const
 {
     return m_map;
 }
 
-const StrategyManager & CCBot::Strategy() const
+const StrategyManager & Bot::Strategy() const
 {
     return m_strategy;
 }
 
-const BaseLocationManager & CCBot::Bases() const
+const BaseLocationManager & Bot::Bases() const
 {
     return m_bases;
 }
 
-const UnitInfoManager & CCBot::UnitInfo() const
+const UnitInfoManager & Bot::UnitInfo() const
 {
     return m_unitInfo;
 }
 
-int CCBot::GetCurrentFrame() const
+int Bot::GetCurrentFrame() const
 {
     return (int)Observation()->GetGameLoop();
 }
 
-const TypeData & CCBot::Data(const UnitType & type) const
+const TypeData & Bot::Data(const UnitType & type) const
 {
     return m_techTree.getData(type);
 }
 
-const TypeData & CCBot::Data(const Unit & unit) const
+const TypeData & Bot::Data(const Unit & unit) const
 {
     return m_techTree.getData(unit.getType());
 }
 
-const TypeData & CCBot::Data(const CCUpgrade & type) const
+const TypeData & Bot::Data(const UpgradeID & type) const
 {
     return m_techTree.getData(type);
 }
 
-const TypeData & CCBot::Data(const MetaType & type) const
+const TypeData & Bot::Data(const MetaType & type) const
 {
     return m_techTree.getData(type);
 }
 
-WorkerManager & CCBot::Workers()
+WorkerManager & Bot::Workers()
 {
     return m_workers;
 }
 
-int CCBot::GetCurrentSupply() const
+int Bot::GetCurrentSupply() const
 {
     return Observation()->GetFoodUsed();
 }
 
-int CCBot::GetMaxSupply() const
+int Bot::GetMaxSupply() const
 {
     return Observation()->GetFoodCap();
 }
 
-int CCBot::GetMinerals() const
+int Bot::GetMinerals() const
 {
     return Observation()->GetMinerals();
 }
 
-int CCBot::GetGas() const
+int Bot::GetGas() const
 {
     return Observation()->GetVespene();
 }
 
-Unit CCBot::GetUnit(const CCUnitID & tag) const
+Unit Bot::GetUnit(const UnitID & tag) const
 {
-    return Unit(Observation()->GetUnit(tag), *(CCBot *)this);
+    return Unit(Observation()->GetUnit(tag), *(Bot *)this);
 }
 
-const std::vector<Unit> & CCBot::GetUnits() const
+const std::vector<Unit> & Bot::GetUnits() const
 {
     return m_allUnits;
 }
 
-CCPosition CCBot::GetStartLocation() const
+Position Bot::GetStartLocation() const
 {
     return Observation()->GetStartLocation();
 }
 
-const std::vector<CCPosition> & CCBot::GetStartLocations() const
+const std::vector<Position> & Bot::GetStartLocations() const
 {
     return m_baseLocations;
 }
 
-void CCBot::OnError(const std::vector<sc2::ClientError> & client_errors, const std::vector<std::string> & protocol_errors)
+void Bot::OnError(const std::vector<sc2::ClientError> & client_errors, const std::vector<std::string> & protocol_errors)
 {
     
 }

@@ -3,12 +3,12 @@
 #include "Common.h"
 #include "UnitType.h"
 
-class CCBot;
+class Bot;
 class MetaType;
 
 struct TypeData
 {
-    CCRace                  race;
+    Race                  race;
     int                     mineralCost     = 0;      // mineral cost of the item
     int                     gasCost         = 0;          // gas cost of the item
     int                     supplyCost      = 0;       // supply cost of the item
@@ -24,14 +24,14 @@ struct TypeData
     sc2::AbilityID          warpAbility     = 0;      // the ability that creates this item via warp-in
     std::vector<UnitType>   whatBuilds;       // any of these units can build the item
     std::vector<UnitType>   requiredUnits;    // owning ONE of these is required to make
-    std::vector<CCUpgrade>  requiredUpgrades; // having ALL of these is required to make
+    std::vector<UpgradeID>  requiredUpgrades; // having ALL of these is required to make
 };
 
 class TechTree
 {
-    CCBot & m_bot;
+    Bot & m_bot;
     std::map<UnitType, TypeData>  m_unitTypeData;
-    std::map<CCUpgrade, TypeData> m_upgradeData;
+    std::map<UpgradeID, TypeData> m_upgradeData;
 
     void initUnitTypeData();
     void initUpgradeData();
@@ -40,10 +40,10 @@ class TechTree
 
 public:
 
-    TechTree(CCBot & bot);
+    TechTree(Bot & bot);
     void onStart();
 
     const TypeData & getData(const UnitType & type) const;
-    const TypeData & getData(const CCUpgrade & type) const;
+    const TypeData & getData(const UpgradeID & type) const;
     const TypeData & getData(const MetaType & type) const;
 };

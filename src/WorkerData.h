@@ -2,7 +2,7 @@
 #include "Common.h"
 #include "Unit.h"
 
-class CCBot;
+class Bot;
 
 namespace WorkerJobs
 {
@@ -11,7 +11,7 @@ namespace WorkerJobs
 
 class WorkerData
 {
-    CCBot & m_bot;
+    Bot & m_bot;
 
     std::set<Unit>          m_workers;
     std::set<Unit>          m_depots;
@@ -26,7 +26,7 @@ class WorkerData
 
 public:
 
-    WorkerData(CCBot & bot);
+    WorkerData(Bot & bot);
 
     void    workerDestroyed(const Unit & unit);
     void    updateAllWorkerData();

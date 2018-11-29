@@ -3,12 +3,12 @@
 #include "Common.h"
 #include "UnitType.h"
 
-class CCBot;
+class Bot;
 
 class Unit
 {
-    mutable CCBot * m_bot;
-    CCUnitID    m_unitID;
+    mutable Bot * m_bot;
+    UnitID    m_unitID;
     UnitType    m_unitType;
 
     const sc2::Unit * m_unit;
@@ -17,7 +17,7 @@ public:
 
     Unit();
 
-    Unit(const sc2::Unit * unit, CCBot & bot);
+    Unit(const sc2::Unit * unit, Bot & bot);
     const sc2::Unit * getUnitPtr() const;
     const sc2::UnitTypeID & getAPIUnitType() const;
 
@@ -26,14 +26,14 @@ public:
 
     const UnitType & getType() const;
 
-    CCPosition getPosition() const;
-    CCTilePosition getTilePosition() const;
-	CCHealth getTotalHealth() const;
-    CCHealth getHitPoints() const;
-    CCHealth getShields() const;
-    CCHealth getEnergy() const;
-    CCPlayer getPlayer() const;
-    CCUnitID getID() const;
+    Position getPosition() const;
+    TilePosition getTilePosition() const;
+	Health getTotalHealth() const;
+    Health getHitPoints() const;
+    Health getShields() const;
+    Health getEnergy() const;
+    Player getPlayer() const;
+    UnitID getID() const;
     float getBuildPercentage() const;
     int getWeaponCooldown() const;
     bool isCompleted() const;
@@ -52,12 +52,12 @@ public:
 
     void stop           () const;
     void attackUnit     (const Unit & target) const;
-    void attackMove     (const CCPosition & targetPosition) const;
-    void move           (const CCPosition & targetPosition) const;
-    void move           (const CCTilePosition & targetTilePosition) const;
+    void attackMove     (const Position & targetPosition) const;
+    void move           (const Position & targetPosition) const;
+    void move           (const TilePosition & targetTilePosition) const;
     void rightClick     (const Unit & target) const;
     void repair         (const Unit & target) const;
-    void build          (const UnitType & buildingType, CCTilePosition pos) const;
+    void build          (const UnitType & buildingType, TilePosition pos) const;
     void buildTarget    (const UnitType & buildingType, const Unit & target) const;
     void train          (const UnitType & buildingType) const;
     void morph          (const UnitType & type) const;

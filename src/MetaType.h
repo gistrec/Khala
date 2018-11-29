@@ -8,23 +8,23 @@ namespace MetaTypes
     enum { Unit, Upgrade, Buff, Tech, Ability, None };
 }
 
-class CCBot;
+class Bot;
 class MetaType
 {
-    CCBot *         m_bot;
+    Bot *         m_bot;
     size_t          m_type;
     std::string     m_name;
-    CCRace          m_race;
+    Race          m_race;
     UnitType        m_unitType;
-    CCUpgrade       m_upgrade;
+    UpgradeID       m_upgrade;
 
     
 public:
 
     MetaType();
-    MetaType(const std::string & name, CCBot & bot);
-    MetaType(const UnitType & unitType, CCBot & bot);
-    MetaType(const CCUpgrade & upgradeType, CCBot & bot);
+    MetaType(const std::string & name, Bot & bot);
+    MetaType(const UnitType & unitType, Bot & bot);
+    MetaType(const UpgradeID & upgradeType, Bot & bot);
 
 	bool operator ==(const MetaType &b) const;
 
@@ -37,9 +37,9 @@ public:
 
     const size_t &          getMetaType()  const;
     const std::string &     getName()       const;
-    const CCRace &          getRace()       const;
+    const Race &          getRace()       const;
     const UnitType &        getUnitType() const;
-    const CCUpgrade &       getUpgrade()  const;
+    const UpgradeID &       getUpgrade()  const;
 
     std::vector<UnitType>   whatBuilds;
 

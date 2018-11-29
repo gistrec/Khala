@@ -1,8 +1,8 @@
 #include "MeleeManager.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 
-MeleeManager::MeleeManager(CCBot & bot)
+MeleeManager::MeleeManager(Bot & bot)
     : MicroManager(bot)
 {
 
@@ -40,7 +40,7 @@ void MeleeManager::assignTargets(const std::vector<Unit> & targets)
             // run away if we meet the retreat critereon
             if (meleeUnitShouldRetreat(meleeUnit, targets))
             {
-                CCPosition fleeTo(m_bot.GetStartLocation());
+                Position fleeTo(m_bot.GetStartLocation());
 
                 meleeUnit.move(fleeTo);
             }

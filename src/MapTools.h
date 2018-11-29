@@ -4,11 +4,11 @@
 #include "DistanceMap.h"
 #include "UnitType.h"
 
-class CCBot;
+class Bot;
 
 class MapTools
 {
-    CCBot & m_bot;
+    Bot & m_bot;
     int     m_width;
     int     m_height;
     float   m_maxZ;
@@ -31,13 +31,13 @@ class MapTools
         
     void printMap();
 
-    float   terrainHeight(const CCPosition & point) const;
+    float   terrainHeight(const Position & point) const;
     bool    canBuild(int tileX, int tileY);
     bool    canWalk(int tileX, int tileY);
 
 public:
 
-    MapTools(CCBot & bot);
+    MapTools(Bot & bot);
 
     void    onStart();
     void    onFrame();
@@ -47,43 +47,43 @@ public:
     int     height() const;
     float   terrainHeight(float x, float y) const;
 
-    void    drawLine(CCPositionType x1, CCPositionType y1, CCPositionType x2, CCPositionType y2, const CCColor & color = CCColor(255, 255, 255)) const;
-    void    drawLine(const CCPosition & p1, const CCPosition & p2, const CCColor & color = CCColor(255, 255, 255)) const;
-    void    drawTile(int tileX, int tileY, const CCColor & color = CCColor(255, 255, 255)) const;
-    void    drawBox(CCPositionType x1, CCPositionType y1, CCPositionType x2, CCPositionType y2, const CCColor & color = CCColor(255, 255, 255)) const;
-    void    drawBox(const CCPosition & tl, const CCPosition & br, const CCColor & color = CCColor(255, 255, 255)) const;
-    void    drawCircle(CCPositionType x1, CCPositionType x2, CCPositionType radius, const CCColor & color = CCColor(255, 255, 255)) const;
-    void    drawCircle(const CCPosition & pos, CCPositionType radius, const CCColor & color = CCColor(255, 255, 255)) const;
-    void    drawText(const CCPosition & pos, const std::string & str, const CCColor & color = CCColor(255, 255, 255)) const;
-    void    drawTextScreen(float xPerc, float yPerc, const std::string & str, const CCColor & color = CCColor(255, 255, 255)) const;
+    void    drawLine(PositionType x1, PositionType y1, PositionType x2, PositionType y2, const Color & color = Color(255, 255, 255)) const;
+    void    drawLine(const Position & p1, const Position & p2, const Color & color = Color(255, 255, 255)) const;
+    void    drawTile(int tileX, int tileY, const Color & color = Color(255, 255, 255)) const;
+    void    drawBox(PositionType x1, PositionType y1, PositionType x2, PositionType y2, const Color & color = Color(255, 255, 255)) const;
+    void    drawBox(const Position & tl, const Position & br, const Color & color = Color(255, 255, 255)) const;
+    void    drawCircle(PositionType x1, PositionType x2, PositionType radius, const Color & color = Color(255, 255, 255)) const;
+    void    drawCircle(const Position & pos, PositionType radius, const Color & color = Color(255, 255, 255)) const;
+    void    drawText(const Position & pos, const std::string & str, const Color & color = Color(255, 255, 255)) const;
+    void    drawTextScreen(float xPerc, float yPerc, const std::string & str, const Color & color = Color(255, 255, 255)) const;
     
     bool    isValidTile(int tileX, int tileY) const;
-    bool    isValidTile(const CCTilePosition & tile) const;
-    bool    isValidPosition(const CCPosition & pos) const;
+    bool    isValidTile(const TilePosition & tile) const;
+    bool    isValidPosition(const Position & pos) const;
     bool    isPowered(int tileX, int tileY) const;
     bool    isExplored(int tileX, int tileY) const;
-	bool	isVisible(const CCTilePosition & tile) const;
-    bool    isExplored(const CCPosition & pos) const;
-    bool    isExplored(const CCTilePosition & pos) const;
+	bool	isVisible(const TilePosition & tile) const;
+    bool    isExplored(const Position & pos) const;
+    bool    isExplored(const TilePosition & pos) const;
     bool    isVisible(int tileX, int tileY) const;
     bool    canBuildTypeAtPosition(int tileX, int tileY, const UnitType & type) const;
 
-    const   DistanceMap & getDistanceMap(const CCTilePosition & tile) const;
-    const   DistanceMap & getDistanceMap(const CCPosition & tile) const;
-    int     getGroundDistance(const CCPosition & src, const CCPosition & dest) const;
+    const   DistanceMap & getDistanceMap(const TilePosition & tile) const;
+    const   DistanceMap & getDistanceMap(const Position & tile) const;
+    int     getGroundDistance(const Position & src, const Position & dest) const;
     bool    isConnected(int x1, int y1, int x2, int y2) const;
-    bool    isConnected(const CCTilePosition & from, const CCTilePosition & to) const;
-    bool    isConnected(const CCPosition & from, const CCPosition & to) const;
+    bool    isConnected(const TilePosition & from, const TilePosition & to) const;
+    bool    isConnected(const Position & from, const Position & to) const;
     bool    isWalkable(int tileX, int tileY) const;
-    bool    isWalkable(const CCTilePosition & tile) const;
+    bool    isWalkable(const TilePosition & tile) const;
     
     bool    isBuildable(int tileX, int tileY) const;
-    bool    isBuildable(const CCTilePosition & tile) const;
+    bool    isBuildable(const TilePosition & tile) const;
     bool    isDepotBuildableTile(int tileX, int tileY) const;
     
-    CCTilePosition getLeastRecentlySeenTile() const;
+    TilePosition getLeastRecentlySeenTile() const;
 
     // returns a list of all tiles on the map, sorted by 4-direcitonal walk distance from the given position
-    const std::vector<CCTilePosition> & getClosestTilesTo(const CCTilePosition & pos) const;
+    const std::vector<TilePosition> & getClosestTilesTo(const TilePosition & pos) const;
 };
 

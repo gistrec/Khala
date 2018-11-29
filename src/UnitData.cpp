@@ -45,7 +45,7 @@ void UnitData::updateUnit(const Unit & unit)
 void UnitData::lostUnit(const Unit & unit)
 {
 	UnitInfo & ui = m_unitMap[unit];
-	ui.lastPosition = CCPosition();
+	ui.lastPosition = Position();
 }
 void UnitData::killUnit(const Unit & unit)
 {

@@ -1,9 +1,9 @@
 #include "Common.h"
 #include "BuildingManager.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Util.h"
 
-BuildingManager::BuildingManager(CCBot & bot)
+BuildingManager::BuildingManager(Bot & bot)
     : m_bot(bot)
     , m_buildingPlacer(bot)
     , m_debugMode(false)
@@ -99,7 +99,7 @@ void BuildingManager::assignWorkersToUnassignedBuildings()
         if (m_debugMode) { printf("Assigning Worker To: %s", b.type.getName().c_str()); }
 
         // grab a worker unit from WorkerManager which is closest to this final position
-        CCTilePosition testLocation = getBuildingLocation(b);
+        TilePosition testLocation = getBuildingLocation(b);
         if (!m_bot.Map().isValidTile(testLocation) || (testLocation.x == 0 && testLocation.y == 0))
         {
             continue;
@@ -304,7 +304,7 @@ void BuildingManager::checkForCompletedBuildings()
 }
 
 // add a new building to be constructed
-void BuildingManager::addBuildingTask(const UnitType & type, const CCTilePosition & desiredPosition)
+void BuildingManager::addBuildingTask(const UnitType & type, const TilePosition & desiredPosition)
 {
     m_reservedMinerals  += m_bot.Data(type).mineralCost;
     m_reservedGas	    += m_bot.Data(type).gasCost;
@@ -379,8 +379,8 @@ void BuildingManager::drawBuildingInformation()
             int x2 = b.finalPosition.x + b.type.tileWidth();
             int y2 = b.finalPosition.y + b.type.tileHeight();
 
-            m_bot.Map().drawBox((CCPositionType)x1, (CCPositionType)y1, (CCPositionType)x2, (CCPositionType)y2, CCColor(255, 0, 0));
-            //m_bot.Map().drawLine(b.finalPosition, m_bot.GetUnit(b.builderUnitTag)->pos, CCColors::Yellow);
+            m_bot.Map().drawBox((PositionType)x1, (PositionType)y1, (PositionType)x2, (PositionType)y2, Color(255, 0, 0));
+            //m_bot.Map().drawLine(b.finalPosition, m_bot.GetUnit(b.builderUnitTag)->pos, Colors::Yellow);
         }
         else if (b.status == BuildingStatus::UnderConstruction)
         {
@@ -406,7 +406,7 @@ std::vector<UnitType> BuildingManager::buildingsQueued() const
     return buildingsQueued;
 }
 
-CCTilePosition BuildingManager::getBuildingLocation(const Building & b)
+TilePosition BuildingManager::getBuildingLocation(const Building & b)
 {
     if (b.type.isRefinery())
     {
@@ -419,12 +419,12 @@ CCTilePosition BuildingManager::getBuildingLocation(const Building & b)
     }
 
 	//In case of Protoss if there are no finished Pylons only a Pylon can be build.
-	if (m_bot.GetPlayerRace(Players::Self) == CCRace::Protoss)
+	if (m_bot.GetPlayerRace(Players::Self) == Race::Protoss)
 	{
 		size_t numPylons = m_bot.UnitInfo().getUnitTypeCount(Players::Self, Util::GetSupplyProvider(m_bot.GetPlayerRace(Players::Self), m_bot), true);
 		if (numPylons == 0 && !b.type.isSupplyProvider())
 		{
-			return CCTilePosition(0, 0);
+			return TilePosition(0, 0);
 		}
 	}
 	

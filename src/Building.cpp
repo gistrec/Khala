@@ -14,7 +14,7 @@ Building::Building()
 {} 
 
 // constructor we use most often
-Building::Building(UnitType t, CCTilePosition desired)
+Building::Building(UnitType t, TilePosition desired)
     : desiredPosition   (desired)
     , finalPosition     (0,0)
     , position          (0,0)

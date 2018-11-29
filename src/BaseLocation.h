@@ -6,52 +6,52 @@
 #include <map>
 #include <vector>
 
-class CCBot;
+class Bot;
 
 class BaseLocation
 {
-    CCBot &                     m_bot;
+    Bot &                     m_bot;
     DistanceMap                 m_distanceMap;
 
-    CCTilePosition              m_depotPosition;
-    CCPosition                  m_centerOfResources;
+    TilePosition              m_depotPosition;
+    Position                  m_centerOfResources;
     std::vector<Unit>           m_geysers;
     std::vector<Unit>           m_minerals;
 
-    std::vector<CCPosition>     m_mineralPositions;
-    std::vector<CCPosition>     m_geyserPositions;
+    std::vector<Position>     m_mineralPositions;
+    std::vector<Position>     m_geyserPositions;
 
-    std::map<CCPlayer, bool>    m_isPlayerOccupying;
-    std::map<CCPlayer, bool>    m_isPlayerStartLocation;
+    std::map<Player, bool>    m_isPlayerOccupying;
+    std::map<Player, bool>    m_isPlayerStartLocation;
         
     int                         m_baseID;
-    CCPositionType              m_left;
-    CCPositionType              m_right;
-    CCPositionType              m_top;
-    CCPositionType              m_bottom;
+    PositionType              m_left;
+    PositionType              m_right;
+    PositionType              m_top;
+    PositionType              m_bottom;
     bool                        m_isStartLocation;
     
 public:
 
-    BaseLocation(CCBot & bot, int baseID, const std::vector<Unit> & resources);
+    BaseLocation(Bot & bot, int baseID, const std::vector<Unit> & resources);
     
-    int getGroundDistance(const CCPosition & pos) const;
-    int getGroundDistance(const CCTilePosition & pos) const;
+    int getGroundDistance(const Position & pos) const;
+    int getGroundDistance(const TilePosition & pos) const;
     bool isStartLocation() const;
-    bool isPlayerStartLocation(CCPlayer player) const;
+    bool isPlayerStartLocation(Player player) const;
     bool isMineralOnly() const;
-    bool containsPosition(const CCPosition & pos) const;
-    const CCTilePosition & getDepotPosition() const;
-    const CCPosition & getPosition() const;
+    bool containsPosition(const Position & pos) const;
+    const TilePosition & getDepotPosition() const;
+    const Position & getPosition() const;
     const std::vector<Unit> & getGeysers() const;
     const std::vector<Unit> & getMinerals() const;
-    bool isOccupiedByPlayer(CCPlayer player) const;
+    bool isOccupiedByPlayer(Player player) const;
     bool isExplored() const;
     bool isInResourceBox(int x, int y) const;
 
-    void setPlayerOccupying(CCPlayer player, bool occupying);
+    void setPlayerOccupying(Player player, bool occupying);
 
-    const std::vector<CCTilePosition> & getClosestTiles() const;
+    const std::vector<TilePosition> & getClosestTiles() const;
 
     void draw();
 };

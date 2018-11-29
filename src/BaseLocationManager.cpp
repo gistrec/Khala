@@ -1,9 +1,9 @@
 #include "BaseLocationManager.h"
 #include "Util.h"
 
-#include "CCBot.h"
+#include "Bot.h"
 
-BaseLocationManager::BaseLocationManager(CCBot & bot)
+BaseLocationManager::BaseLocationManager(Bot & bot)
     : m_bot(bot)
 {
     
@@ -17,7 +17,7 @@ void BaseLocationManager::onStart()
     
     // a BaseLocation will be anything where there are minerals to mine
     // so we will first look over all minerals and cluster them based on some distance
-    const CCPositionType clusterDistance = Util::TileToPosition(12);
+    const PositionType clusterDistance = Util::TileToPosition(12);
     
     // stores each cluster of resources based on some ground distance
     std::vector<std::vector<Unit>> resourceClusters;
@@ -118,7 +118,7 @@ void BaseLocationManager::onStart()
         {
             for (auto & baseLocation : m_baseLocationData)
             {
-                CCPosition pos(Util::TileToPosition(x + 0.5f), Util::TileToPosition(y + 0.5f));
+                Position pos(Util::TileToPosition(x + 0.5f), Util::TileToPosition(y + 0.5f));
 
                 if (baseLocation.containsPosition(pos))
                 {
@@ -248,7 +248,7 @@ void BaseLocationManager::onFrame()
     
 }
 
-BaseLocation * BaseLocationManager::getBaseLocation(const CCPosition & pos) const
+BaseLocation * BaseLocationManager::getBaseLocation(const Position & pos) const
 {
     if (!m_bot.Map().isValidPosition(pos)) { return nullptr; }
 
@@ -268,10 +268,10 @@ void BaseLocationManager::drawBaseLocations()
     }
 
     // draw a purple sphere at the next expansion location
-    CCTilePosition nextExpansionPosition = getNextExpansion(Players::Self);
+    TilePosition nextExpansionPosition = getNextExpansion(Players::Self);
 
-    m_bot.Map().drawCircle(Util::GetPosition(nextExpansionPosition), 1, CCColor(255, 0, 255));
-    m_bot.Map().drawText(Util::GetPosition(nextExpansionPosition), "Next Expansion Location", CCColor(255, 0, 255));
+    m_bot.Map().drawCircle(Util::GetPosition(nextExpansionPosition), 1, Color(255, 0, 255));
+    m_bot.Map().drawText(Util::GetPosition(nextExpansionPosition), "Next Expansion Location", Color(255, 0, 255));
 }
 
 const std::vector<const BaseLocation *> & BaseLocationManager::getBaseLocations() const
@@ -295,13 +295,13 @@ const std::set<const BaseLocation *> & BaseLocationManager::getOccupiedBaseLocat
 }
 
 
-CCTilePosition BaseLocationManager::getNextExpansion(int player) const
+TilePosition BaseLocationManager::getNextExpansion(int player) const
 {
     const BaseLocation * homeBase = getPlayerStartingBaseLocation(player);
     const BaseLocation * closestBase = nullptr;
     int minDistance = std::numeric_limits<int>::max();
 
-    CCPosition homeTile = homeBase->getPosition();
+    Position homeTile = homeBase->getPosition();
     
     for (auto & base : getBaseLocations())
     {
@@ -337,5 +337,5 @@ CCTilePosition BaseLocationManager::getNextExpansion(int player) const
         }
     }
 
-    return closestBase ? closestBase->getDepotPosition() : CCTilePosition(0, 0);
+    return closestBase ? closestBase->getDepotPosition() : TilePosition(0, 0);
 }

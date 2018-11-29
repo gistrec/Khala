@@ -7,12 +7,12 @@
 typedef std::pair<UnitType, size_t> UnitPair;
 typedef std::vector<UnitPair>       UnitPairVector;
 
-class CCBot;
+class Bot;
 
 struct Strategy
 {
     std::string m_name;
-    CCRace      m_race;
+    Race      m_race;
     int         m_wins;
     int         m_losses;
     BuildOrder  m_buildOrder;
@@ -20,15 +20,15 @@ struct Strategy
     Condition   m_attackCondition;
 
     Strategy();
-    Strategy(const std::string & name, const CCRace & race, const BuildOrder & buildOrder, const Condition & scoutCondition, const Condition & attackCondition);
+    Strategy(const std::string & name, const Race & race, const BuildOrder & buildOrder, const Condition & scoutCondition, const Condition & attackCondition);
 };
 
 class StrategyManager
 {
-    CCBot & m_bot;
+    Bot & m_bot;
 
-    CCRace                          m_selfRace;
-    CCRace                          m_enemyRace;
+    Race                          m_selfRace;
+    Race                          m_enemyRace;
     std::map<std::string, Strategy> m_strategies;
     int                             m_totalGamesPlayed;
     const BuildOrder                m_emptyBuildOrder;
@@ -40,7 +40,7 @@ class StrategyManager
 
 public:
 
-    StrategyManager(CCBot & bot);
+    StrategyManager(Bot & bot);
 
     const Strategy & getCurrentStrategy() const;
     bool scoutConditionIsMet() const;

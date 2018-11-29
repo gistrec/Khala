@@ -1,10 +1,10 @@
 #include "WorkerData.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include <iostream>
 #include <sstream>
 
-WorkerData::WorkerData(CCBot & bot)
+WorkerData::WorkerData(Bot & bot)
     : m_bot(bot)
 {
     for (int i=0; i < WorkerJobs::Num; ++i)

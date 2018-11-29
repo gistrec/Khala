@@ -46,10 +46,10 @@ public:
     bool DrawUnitTargetInfo;
     bool DrawSquadInfo;		
     
-    CCColor ColorLineTarget;
-    CCColor ColorLineMineral;
-    CCColor ColorUnitNearEnemy;
-    CCColor ColorUnitNotNearEnemy;
+    Color ColorLineTarget;
+    Color ColorLineMineral;
+    Color ColorUnitNearEnemy;
+    Color ColorUnitNotNearEnemy;
     
     bool KiteWithRangedUnits;    
     bool ScoutHarassEnemy;

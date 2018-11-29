@@ -1,8 +1,8 @@
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include <iostream>
 
-std::string Util::GetStringFromRace(const CCRace & race)
+std::string Util::GetStringFromRace(const Race & race)
 {
     if      (race == sc2::Race::Terran)  { return "Terran"; }
     else if (race == sc2::Race::Protoss) { return "Protoss"; }
@@ -12,7 +12,7 @@ std::string Util::GetStringFromRace(const CCRace & race)
     return "Error";
 }
 
-CCRace Util::GetRaceFromString(const std::string & raceIn)
+Race Util::GetRaceFromString(const std::string & raceIn)
 {
     std::string race(raceIn);
     std::transform(race.begin(), race.end(), race.begin(), ::tolower);
@@ -26,12 +26,12 @@ CCRace Util::GetRaceFromString(const std::string & raceIn)
     return sc2::Race::Random;
 }
 
-CCPositionType Util::TileToPosition(float tile)
+PositionType Util::TileToPosition(float tile)
 {
     return tile;
 }
 
-UnitType Util::GetSupplyProvider(const CCRace & race, CCBot & bot)
+UnitType Util::GetSupplyProvider(const Race & race, Bot & bot)
 {
     switch (race) 
     {
@@ -42,7 +42,7 @@ UnitType Util::GetSupplyProvider(const CCRace & race, CCBot & bot)
     }
 }
 
-UnitType Util::GetTownHall(const CCRace & race, CCBot & bot)
+UnitType Util::GetTownHall(const Race & race, Bot & bot)
 {
     switch (race) 
     {
@@ -53,7 +53,7 @@ UnitType Util::GetTownHall(const CCRace & race, CCBot & bot)
     }
 }
 
-UnitType Util::GetRefinery(const CCRace & race, CCBot & bot)
+UnitType Util::GetRefinery(const Race & race, Bot & bot)
 {
     switch (race) 
     {
@@ -64,15 +64,15 @@ UnitType Util::GetRefinery(const CCRace & race, CCBot & bot)
     }
 }
 
-CCPosition Util::CalcCenter(const std::vector<Unit> & units)
+Position Util::CalcCenter(const std::vector<Unit> & units)
 {
     if (units.empty())
     {
-        return CCPosition(0, 0);
+        return Position(0, 0);
     }
 
-    CCPositionType cx = 0;
-    CCPositionType cy = 0;
+    PositionType cx = 0;
+    PositionType cy = 0;
 
     for (auto & unit : units)
     {
@@ -81,40 +81,40 @@ CCPosition Util::CalcCenter(const std::vector<Unit> & units)
         cy += unit.getPosition().y;
     }
 
-    return CCPosition(cx / units.size(), cy / units.size());
+    return Position(cx / units.size(), cy / units.size());
 }
 
-bool Util::IsZerg(const CCRace & race)
+bool Util::IsZerg(const Race & race)
 {
     return race == sc2::Race::Zerg;
 }
 
-bool Util::IsProtoss(const CCRace & race)
+bool Util::IsProtoss(const Race & race)
 {
     return race == sc2::Race::Protoss;
 }
 
-bool Util::IsTerran(const CCRace & race)
+bool Util::IsTerran(const Race & race)
 {
     return race == sc2::Race::Terran;
 }
 
-CCTilePosition Util::GetTilePosition(const CCPosition & pos)
+TilePosition Util::GetTilePosition(const Position & pos)
 {
-    return CCTilePosition((int)std::floor(pos.x), (int)std::floor(pos.y));
+    return TilePosition((int)std::floor(pos.x), (int)std::floor(pos.y));
 }
 
-CCPosition Util::GetPosition(const CCTilePosition & tile)
+Position Util::GetPosition(const TilePosition & tile)
 {
-    return CCPosition((float)tile.x, (float)tile.y);
+    return Position((float)tile.x, (float)tile.y);
 }
 
-float Util::Dist(const CCPosition & p1, const CCPosition & p2)
+float Util::Dist(const Position & p1, const Position & p2)
 {
     return sqrtf((float)Util::DistSq(p1,p2));
 }
 
-float Util::Dist(const Unit & unit, const CCPosition & p2)
+float Util::Dist(const Unit & unit, const Position & p2)
 {
     return Dist(unit.getPosition(), p2);
 }
@@ -124,15 +124,15 @@ float Util::Dist(const Unit & unit1, const Unit & unit2)
     return Dist(unit1.getPosition(), unit2.getPosition());
 }
 
-CCPositionType Util::DistSq(const CCPosition & p1, const CCPosition & p2)
+PositionType Util::DistSq(const Position & p1, const Position & p2)
 {
-    CCPositionType dx = p1.x - p2.x;
-    CCPositionType dy = p1.y - p2.y;
+    PositionType dx = p1.x - p2.x;
+    PositionType dy = p1.y - p2.y;
 
     return dx*dx + dy*dy;
 }
 
-sc2::BuffID Util::GetBuffFromName(const std::string & name, CCBot & bot)
+sc2::BuffID Util::GetBuffFromName(const std::string & name, Bot & bot)
 {
     for (const sc2::BuffData & data : bot.Observation()->GetBuffData())
     {
@@ -145,7 +145,7 @@ sc2::BuffID Util::GetBuffFromName(const std::string & name, CCBot & bot)
     return 0;
 }
 
-sc2::AbilityID Util::GetAbilityFromName(const std::string & name, CCBot & bot)
+sc2::AbilityID Util::GetAbilityFromName(const std::string & name, Bot & bot)
 {
     for (const sc2::AbilityData & data : bot.Observation()->GetAbilityData())
     {
@@ -160,7 +160,7 @@ sc2::AbilityID Util::GetAbilityFromName(const std::string & name, CCBot & bot)
 
 // checks where a given unit can make a given unit type now
 // this is done by iterating its legal abilities for the build command to make the unit
-bool Util::UnitCanMetaTypeNow(const Unit & unit, const UnitType & type, CCBot & m_bot)
+bool Util::UnitCanMetaTypeNow(const Unit & unit, const UnitType & type, Bot & m_bot)
 {
     BOT_ASSERT(unit.isValid(), "Unit pointer was null");
     sc2::AvailableAbilities available_abilities = m_bot.Query()->GetAbilitiesForUnit(unit.getUnitPtr());
@@ -185,7 +185,7 @@ bool Util::UnitCanMetaTypeNow(const Unit & unit, const UnitType & type, CCBot & 
     return false;
 }
 
-std::vector<UnitType> Util::getEquivalentTypes(const UnitType unit, CCBot & m_bot)
+std::vector<UnitType> Util::getEquivalentTypes(const UnitType unit, Bot & m_bot)
 {
 	switch (unit.getAPIUnitType().ToType())
 	{

@@ -1,6 +1,6 @@
 #include "MetaType.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 
 MetaType::MetaType()
     : m_bot         (nullptr)
@@ -11,7 +11,7 @@ MetaType::MetaType()
 {
 }
 
-MetaType::MetaType(const std::string & name, CCBot & bot)
+MetaType::MetaType(const std::string & name, Bot & bot)
     : MetaType()
 {
     m_bot = &bot;
@@ -38,7 +38,7 @@ MetaType::MetaType(const std::string & name, CCBot & bot)
 }
 
 
-MetaType::MetaType(const UnitType & unitType, CCBot & bot)
+MetaType::MetaType(const UnitType & unitType, Bot & bot)
 {
     m_bot           = &bot;
     m_type          = MetaTypes::Unit;
@@ -47,7 +47,7 @@ MetaType::MetaType(const UnitType & unitType, CCBot & bot)
     m_name          = unitType.getName();
 }
 
-MetaType::MetaType(const CCUpgrade & upgradeType, CCBot & bot)
+MetaType::MetaType(const UpgradeID & upgradeType, Bot & bot)
 {
     m_bot           = &bot;
     m_type          = MetaTypes::Upgrade;
@@ -92,7 +92,7 @@ bool MetaType::isTech() const
     return m_type == MetaTypes::Tech;
 }
 
-const CCRace & MetaType::getRace() const
+const Race & MetaType::getRace() const
 {
     return m_race;
 }
@@ -102,7 +102,7 @@ const UnitType & MetaType::getUnitType() const
     return m_unitType;
 }
 
-const CCUpgrade & MetaType::getUpgrade() const
+const UpgradeID & MetaType::getUpgrade() const
 {
     return m_upgrade;
 }

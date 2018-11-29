@@ -3,33 +3,33 @@
 #include "Common.h"
 #include "UnitType.h"
 
-class CCBot;
+class Bot;
 class Unit;
 
 namespace Util
 {
-    CCRace          GetRaceFromString(const std::string & str);
-    CCTilePosition  GetTilePosition(const CCPosition & pos);
-    CCPosition      GetPosition(const CCTilePosition & tile);
-    std::string     GetStringFromRace(const CCRace & race);
-    bool            UnitCanMetaTypeNow(const Unit & unit, const UnitType & type, CCBot & m_bot);
-	std::vector<UnitType> getEquivalentTypes(const UnitType unit, CCBot & bot);
-    UnitType        GetTownHall(const CCRace & race, CCBot & bot);
-    UnitType        GetRefinery(const CCRace & race, CCBot & bot);
-    UnitType        GetSupplyProvider(const CCRace & race, CCBot & bot);
-    CCPosition      CalcCenter(const std::vector<Unit> & units);
-    bool            IsZerg(const CCRace & race);
-    bool            IsProtoss(const CCRace & race);
-    bool            IsTerran(const CCRace & race);
-    CCPositionType  TileToPosition(float tile);
+    Race          GetRaceFromString(const std::string & str);
+    TilePosition  GetTilePosition(const Position & pos);
+    Position      GetPosition(const TilePosition & tile);
+    std::string     GetStringFromRace(const Race & race);
+    bool            UnitCanMetaTypeNow(const Unit & unit, const UnitType & type, Bot & m_bot);
+	std::vector<UnitType> getEquivalentTypes(const UnitType unit, Bot & bot);
+    UnitType        GetTownHall(const Race & race, Bot & bot);
+    UnitType        GetRefinery(const Race & race, Bot & bot);
+    UnitType        GetSupplyProvider(const Race & race, Bot & bot);
+    Position      CalcCenter(const std::vector<Unit> & units);
+    bool            IsZerg(const Race & race);
+    bool            IsProtoss(const Race & race);
+    bool            IsTerran(const Race & race);
+    PositionType  TileToPosition(float tile);
 
-    sc2::BuffID     GetBuffFromName(const std::string & name, CCBot & bot);
-    sc2::AbilityID  GetAbilityFromName(const std::string & name, CCBot & bot);
+    sc2::BuffID     GetBuffFromName(const std::string & name, Bot & bot);
+    sc2::AbilityID  GetAbilityFromName(const std::string & name, Bot & bot);
 
-    float Dist(const Unit & unit, const CCPosition & p2);
+    float Dist(const Unit & unit, const Position & p2);
     float Dist(const Unit & unit1, const Unit & unit2);
-    float Dist(const CCPosition & p1, const CCPosition & p2);
-    CCPositionType DistSq(const CCPosition & p1, const CCPosition & p2);
+    float Dist(const Position & p1, const Position & p2);
+    PositionType DistSq(const Position & p1, const Position & p2);
 
 	std::string ExePath();
 };

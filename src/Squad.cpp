@@ -1,8 +1,8 @@
 #include "Squad.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Util.h"
 
-Squad::Squad(CCBot & bot)
+Squad::Squad(Bot & bot)
     : m_bot(bot)
     , m_lastRetreatSwitch(0)
     , m_lastRetreatSwitchVal(false)
@@ -14,7 +14,7 @@ Squad::Squad(CCBot & bot)
 
 }
 
-Squad::Squad(const std::string & name, const SquadOrder & order, size_t priority, CCBot & bot)
+Squad::Squad(const std::string & name, const SquadOrder & order, size_t priority, Bot & bot)
     : m_bot(bot)
     , m_name(name)
     , m_order(order)
@@ -37,9 +37,9 @@ void Squad::onFrame()
     // if we do need to regroup, do it
     if (needToRegroup)
     {
-        CCPosition regroupPosition = calcRegroupPosition();
+        Position regroupPosition = calcRegroupPosition();
 
-        m_bot.Map().drawCircle(regroupPosition, 3, CCColor(255, 0, 255));
+        m_bot.Map().drawCircle(regroupPosition, 3, Color(255, 0, 255));
 
         m_meleeManager.regroup(regroupPosition);
         m_rangedManager.regroup(regroupPosition);
@@ -98,7 +98,7 @@ void Squad::setNearEnemyUnits()
     {
         m_nearEnemy[unit] = isUnitNearEnemy(unit);
 
-        CCColor color = m_nearEnemy[unit] ? m_bot.Config().ColorUnitNearEnemy : m_bot.Config().ColorUnitNotNearEnemy;
+        Color color = m_nearEnemy[unit] ? m_bot.Config().ColorUnitNearEnemy : m_bot.Config().ColorUnitNotNearEnemy;
         //m_bot.Map().drawCircleAroundUnit(unitTag, color);
     }
 }
@@ -189,26 +189,26 @@ bool Squad::isUnitNearEnemy(const Unit & unit) const
     return false;
 }
 
-CCPosition Squad::calcCenter() const
+Position Squad::calcCenter() const
 {
     if (m_units.empty())
     {
-        return CCPosition(0, 0);
+        return Position(0, 0);
     }
 
-    CCPosition sum(0, 0);
+    Position sum(0, 0);
     for (auto unit: m_units)
     {
         BOT_ASSERT(unit.isValid(), "null unit in squad calcCenter");
         sum += unit.getPosition();
     }
 
-    return CCPosition(sum.x / m_units.size(), sum.y / m_units.size());
+    return Position(sum.x / m_units.size(), sum.y / m_units.size());
 }
 
-CCPosition Squad::calcRegroupPosition() const
+Position Squad::calcRegroupPosition() const
 {
-    CCPosition regroup(0, 0);
+    Position regroup(0, 0);
 
     float minDist = std::numeric_limits<float>::max();
 
@@ -257,7 +257,7 @@ Unit Squad::unitClosestToEnemy() const
     return closest;
 }
 
-int Squad::squadUnitsNear(const CCPosition & p) const
+int Squad::squadUnitsNear(const Position & p) const
 {
     int numUnits = 0;
 

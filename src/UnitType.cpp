@@ -1,5 +1,5 @@
 #include "UnitType.h"
-#include "CCBot.h"
+#include "Bot.h"
 
 UnitType::UnitType()
     : m_bot(nullptr)
@@ -8,7 +8,7 @@ UnitType::UnitType()
 
 }
 
-UnitType::UnitType(const sc2::UnitTypeID & type, CCBot & bot)
+UnitType::UnitType(const sc2::UnitTypeID & type, Bot & bot)
     : m_bot(&bot)
     , m_type(type)
 {
@@ -50,7 +50,7 @@ std::string UnitType::getName() const
     return sc2::UnitTypeToName(m_type);
 }
 
-CCRace UnitType::getRace() const
+Race UnitType::getRace() const
 {
     return m_bot->Observation()->GetUnitTypeData()[m_type].race;
 }
@@ -158,7 +158,7 @@ bool UnitType::isWorker() const
     }
 }
 
-CCPositionType UnitType::getAttackRange() const
+PositionType UnitType::getAttackRange() const
 {
     auto & weapons = m_bot->Observation()->GetUnitTypeData()[m_type].weapons;
     
@@ -223,7 +223,7 @@ int UnitType::gasPrice() const
     return (int)m_bot->Observation()->GetUnitTypeData()[m_type].vespene_cost;
 }
 
-UnitType UnitType::GetUnitTypeFromName(const std::string & name, CCBot & bot)
+UnitType UnitType::GetUnitTypeFromName(const std::string & name, Bot & bot)
 {
     for (const sc2::UnitTypeData & data : bot.Observation()->GetUnitTypeData())
     {

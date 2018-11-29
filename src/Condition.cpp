@@ -1,5 +1,5 @@
 #include "Condition.h"
-#include "CCBot.h"
+#include "Bot.h"
 
 Condition::Condition()
     : m_bot     (nullptr)
@@ -12,7 +12,7 @@ Condition::Condition()
 
 }
 
-Condition::Condition(const json & j, CCBot & bot)
+Condition::Condition(const json & j, Bot & bot)
     : Condition()
 {
     m_bot = &bot;

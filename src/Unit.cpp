@@ -1,5 +1,5 @@
 #include "Unit.h"
-#include "CCBot.h"
+#include "Bot.h"
 
 Unit::Unit()
     : m_bot(nullptr)
@@ -9,7 +9,7 @@ Unit::Unit()
 
 }
 
-Unit::Unit(const sc2::Unit * unit, CCBot & bot)
+Unit::Unit(const sc2::Unit * unit, Bot & bot)
     : m_bot(&bot)
     , m_unit(unit)
     , m_unitID(unit->tag)
@@ -45,37 +45,37 @@ const UnitType & Unit::getType() const
 }
 
 
-CCPosition Unit::getPosition() const
+Position Unit::getPosition() const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
     return m_unit->pos;
 }
 
-CCTilePosition Unit::getTilePosition() const
+TilePosition Unit::getTilePosition() const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
     return Util::GetTilePosition(m_unit->pos);
 }
 
-CCHealth Unit::getTotalHealth() const
+Health Unit::getTotalHealth() const
 {
 	BOT_ASSERT(isValid(), "Unit is not valid");
 	return m_unit->health + m_unit->shield;
 }
 
-CCHealth Unit::getHitPoints() const
+Health Unit::getHitPoints() const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
     return m_unit->health;
 }
 
-CCHealth Unit::getShields() const
+Health Unit::getShields() const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
     return m_unit->shield;
 }
 
-CCHealth Unit::getEnergy() const
+Health Unit::getEnergy() const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
     return m_unit->energy;
@@ -87,7 +87,7 @@ float Unit::getBuildPercentage() const
     return m_unit->build_progress;
 }
 
-CCPlayer Unit::getPlayer() const
+Player Unit::getPlayer() const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
     if (m_unit->alliance == sc2::Unit::Alliance::Self) { return 0; }
@@ -95,10 +95,10 @@ CCPlayer Unit::getPlayer() const
     else { return 2; }
 }
 
-CCUnitID Unit::getID() const
+UnitID Unit::getID() const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
-    CCUnitID id = m_unit->tag;
+    UnitID id = m_unit->tag;
 
     BOT_ASSERT(id == m_unitID, "Unit ID changed somehow");
     return id;
@@ -188,22 +188,22 @@ void Unit::attackUnit(const Unit & target) const
     m_bot->Actions()->UnitCommand(m_unit, sc2::ABILITY_ID::ATTACK_ATTACK, target.getUnitPtr());
 }
 
-void Unit::attackMove(const CCPosition & targetPosition) const
+void Unit::attackMove(const Position & targetPosition) const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
     m_bot->Actions()->UnitCommand(m_unit, sc2::ABILITY_ID::ATTACK_ATTACK, targetPosition);
 }
 
-void Unit::move(const CCPosition & targetPosition) const
+void Unit::move(const Position & targetPosition) const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
     m_bot->Actions()->UnitCommand(m_unit, sc2::ABILITY_ID::MOVE, targetPosition);
 }
 
-void Unit::move(const CCTilePosition & targetPosition) const
+void Unit::move(const TilePosition & targetPosition) const
 {
     BOT_ASSERT(isValid(), "Unit is not valid");
-    m_bot->Actions()->UnitCommand(m_unit, sc2::ABILITY_ID::MOVE, CCPosition((float)targetPosition.x, (float)targetPosition.y));
+    m_bot->Actions()->UnitCommand(m_unit, sc2::ABILITY_ID::MOVE, Position((float)targetPosition.x, (float)targetPosition.y));
 }
 
 void Unit::rightClick(const Unit & target) const
@@ -217,7 +217,7 @@ void Unit::repair(const Unit & target) const
     rightClick(target);
 }
 
-void Unit::build(const UnitType & buildingType, CCTilePosition pos) const
+void Unit::build(const UnitType & buildingType, TilePosition pos) const
 {
     BOT_ASSERT(m_bot->Map().isConnected(getTilePosition(), pos), "Error: Build Position is not connected to worker");
     BOT_ASSERT(isValid(), "Unit is not valid");

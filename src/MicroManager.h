@@ -4,7 +4,7 @@
 #include "SquadOrder.h"
 #include "Unit.h"
 
-class CCBot;
+class Bot;
 
 class MicroManager
 {
@@ -12,7 +12,7 @@ class MicroManager
 
 protected:
 
-    CCBot & m_bot;
+    Bot & m_bot;
     SquadOrder order;
 
     virtual void executeMicro(const std::vector<Unit> & targets) = 0;
@@ -20,12 +20,12 @@ protected:
 
 public:
 
-    MicroManager(CCBot & bot);
+    MicroManager(Bot & bot);
 
     const std::vector<Unit> & getUnits() const;
 
     void setUnits(const std::vector<Unit> & u);
     void execute(const SquadOrder & order);
-    void regroup(const CCPosition & regroupPosition) const;
+    void regroup(const Position & regroupPosition) const;
 
 };

@@ -1,9 +1,9 @@
 #include "WorkerManager.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Util.h"
 #include "Building.h"
 
-WorkerManager::WorkerManager(CCBot & bot)
+WorkerManager::WorkerManager(Bot & bot)
     : m_bot         (bot)
     , m_workerData  (bot)
 {
@@ -92,7 +92,7 @@ void WorkerManager::handleRepairWorkers()
     // TODO
 }
 
-Unit WorkerManager::getClosestMineralWorkerTo(const CCPosition & pos) const
+Unit WorkerManager::getClosestMineralWorkerTo(const Position & pos) const
 {
     Unit closestMineralWorker;
     double closestDist = std::numeric_limits<double>::max();

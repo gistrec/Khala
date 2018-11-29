@@ -1,8 +1,8 @@
 #include "SquadData.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Util.h"
 
-SquadData::SquadData(CCBot & bot)
+SquadData::SquadData(Bot & bot)
     : m_bot(bot)
 {
 
@@ -101,18 +101,18 @@ void SquadData::drawSquadInformation()
         ss << squad.getName() << " " << units.size() << " (";
         ss << (int)order.getPosition().x << ", " << (int)order.getPosition().y << ")\n";
 
-        m_bot.Map().drawCircle(order.getPosition(), 5, CCColor(255, 0, 0));
-        m_bot.Map().drawText(order.getPosition(), squad.getName(), CCColor(255, 0, 0));
+        m_bot.Map().drawCircle(order.getPosition(), 5, Color(255, 0, 0));
+        m_bot.Map().drawText(order.getPosition(), squad.getName(), Color(255, 0, 0));
 
         for (auto & unit : units)
         {
             BOT_ASSERT(unit.isValid(), "null unit");
 
-            m_bot.Map().drawText(unit.getPosition(), squad.getName(), CCColor(0, 255, 0));
+            m_bot.Map().drawText(unit.getPosition(), squad.getName(), Color(0, 255, 0));
         }
     }
 
-    m_bot.Map().drawTextScreen(0.5f, 0.2f, ss.str(), CCColor(255, 0, 0));
+    m_bot.Map().drawTextScreen(0.5f, 0.2f, ss.str(), Color(255, 0, 0));
 }
 
 void SquadData::verifySquadUniqueMembership()

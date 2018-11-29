@@ -3,11 +3,11 @@
 #include "Common.h"
 #include "BuildingPlacer.h"
 
-class CCBot;
+class Bot;
 
 class BuildingManager
 {
-    CCBot &   m_bot;
+    Bot &   m_bot;
 
     BuildingPlacer  m_buildingPlacer;
     std::vector<Building> m_buildings;
@@ -30,13 +30,13 @@ class BuildingManager
 
 public:
 
-    BuildingManager(CCBot & bot);
+    BuildingManager(Bot & bot);
 
     void                onStart();
     void                onFrame();
-    void                addBuildingTask(const UnitType & type, const CCTilePosition & desiredPosition);
+    void                addBuildingTask(const UnitType & type, const TilePosition & desiredPosition);
     void                drawBuildingInformation();
-    CCTilePosition      getBuildingLocation(const Building & b);
+    TilePosition      getBuildingLocation(const Building & b);
 
     int                 getReservedMinerals();
     int                 getReservedGas();

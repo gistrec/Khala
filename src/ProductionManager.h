@@ -5,16 +5,16 @@
 #include "BuildingManager.h"
 #include "BuildOrderQueue.h"
 
-class CCBot;
+class Bot;
 
 class ProductionManager
 {
-    CCBot &       m_bot;
+    Bot &       m_bot;
 
     BuildingManager m_buildingManager;
     BuildOrderQueue m_queue;
 
-    Unit    getClosestUnitToPosition(const std::vector<Unit> & units, CCPosition closestTo);
+    Unit    getClosestUnitToPosition(const std::vector<Unit> & units, Position closestTo);
     bool    meetsReservedResources(const MetaType & type);
     bool    canMakeNow(const Unit & producer, const MetaType & type);
     bool    detectBuildOrderDeadlock();
@@ -28,12 +28,12 @@ class ProductionManager
 
 public:
 
-    ProductionManager(CCBot & bot);
+    ProductionManager(Bot & bot);
 
     void    onStart();
     void    onFrame();
     void    onUnitDestroy(const Unit & unit);
     void    drawProductionInformation();
 
-    Unit getProducer(const MetaType & type, CCPosition closestTo = CCPosition(0, 0));
+    Unit getProducer(const MetaType & type, Position closestTo = Position(0, 0));
 };

@@ -1,10 +1,10 @@
 #include "TechTree.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "MetaType.h"
 #include "Timer.hpp"
 
-TechTree::TechTree(CCBot & bot)
+TechTree::TechTree(Bot & bot)
     : m_bot(bot)
 {
 
@@ -278,7 +278,7 @@ const TypeData & TechTree::getData(const UnitType & type) const
     return m_unitTypeData.at(type);
 }
 
-const TypeData & TechTree::getData(const CCUpgrade & type)  const
+const TypeData & TechTree::getData(const UpgradeID & type)  const
 {
     if (m_upgradeData.find(type) == m_upgradeData.end())
     {

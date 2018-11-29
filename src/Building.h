@@ -13,9 +13,9 @@ class Building
 {
 public:
 
-    CCTilePosition  desiredPosition;
-    CCTilePosition  finalPosition;
-    CCTilePosition  position;
+    TilePosition  desiredPosition;
+    TilePosition  finalPosition;
+    TilePosition  position;
     UnitType        type;
     Unit            buildingUnit;
     Unit            builderUnit;
@@ -27,7 +27,7 @@ public:
     Building();
 
     // constructor we use most often
-    Building(UnitType t, CCTilePosition desired);
+    Building(UnitType t, TilePosition desired);
 
     // equals operator
     bool operator == (const Building & b);

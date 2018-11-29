@@ -1,8 +1,8 @@
 #include "MicroManager.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Util.h"
 
-MicroManager::MicroManager(CCBot & bot)
+MicroManager::MicroManager(Bot & bot)
     : m_bot(bot)
 {
 }
@@ -113,9 +113,9 @@ const std::vector<Unit> & MicroManager::getUnits() const
     return m_units;
 }
 
-void MicroManager::regroup(const CCPosition & regroupPosition) const
+void MicroManager::regroup(const Position & regroupPosition) const
 {
-    CCPosition ourBasePosition = m_bot.GetStartLocation();
+    Position ourBasePosition = m_bot.GetStartLocation();
     int regroupDistanceFromBase = m_bot.Map().getGroundDistance(regroupPosition, ourBasePosition);
 
     // for each of the units we have

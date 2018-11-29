@@ -1,5 +1,5 @@
 #include "Common.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "JSONTools.h"
 #include "Util.h" 
 
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 	}
 
 	// Add the custom bot, it will control the players.
-	CCBot bot;
+	Bot bot;
 
 
 	// WARNING: Bot logic has not been thorougly tested on step sizes > 1
@@ -105,7 +105,8 @@ int main(int argc, char* argv[]) {
 	if (!coordinator.LoadSettings(argc, argv)) {
 		return 1;
 	}
-	std::string configPath = Util::ExePath() + "\\BotConfig.txt";
+	std::string configPath = filePath + "\\BotConfig.txt";
+
 	std::string config = JSONTools::ReadFile(configPath);
 	if (config.length() == 0)
 	{
@@ -135,7 +136,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	
-	RunBot(argc, argv, new CCBot(), Util::GetRaceFromString(botRaceString));
+	RunBot(argc, argv, new Bot(), Util::GetRaceFromString(botRaceString));
 	return 0;
 }
 #endif // !LADDEREXE

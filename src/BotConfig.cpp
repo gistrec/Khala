@@ -42,10 +42,10 @@ BotConfig::BotConfig()
     KiteWithRangedUnits                 = true;
     ScoutHarassEnemy                    = true;
 
-    ColorLineTarget                     = CCColor(255, 255, 255);
-    ColorLineMineral                    = CCColor(0, 128, 128);
-    ColorUnitNearEnemy                  = CCColor(255, 0, 0);
-    ColorUnitNotNearEnemy               = CCColor(0, 255, 0);
+    ColorLineTarget                     = Color(255, 255, 255);
+    ColorLineMineral                    = Color(0, 128, 128);
+    ColorUnitNearEnemy                  = Color(255, 0, 0);
+    ColorUnitNotNearEnemy               = Color(0, 255, 0);
     
     WorkersPerRefinery                  = 3;
     BuildingSpacing                     = 1;

@@ -1,27 +1,27 @@
 #include "BaseLocation.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include <sstream>
 #include <iostream>
 
 const int NearBaseLocationTileDistance = 20;
 
-BaseLocation::BaseLocation(CCBot & bot, int baseID, const std::vector<Unit> & resources)
+BaseLocation::BaseLocation(Bot & bot, int baseID, const std::vector<Unit> & resources)
     : m_bot(bot)
     , m_baseID               (baseID)
     , m_isStartLocation      (false)
-    , m_left                 (std::numeric_limits<CCPositionType>::max())
-    , m_right                (std::numeric_limits<CCPositionType>::lowest())
-    , m_top                  (std::numeric_limits<CCPositionType>::lowest())
-    , m_bottom               (std::numeric_limits<CCPositionType>::max())
+    , m_left                 (std::numeric_limits<PositionType>::max())
+    , m_right                (std::numeric_limits<PositionType>::lowest())
+    , m_top                  (std::numeric_limits<PositionType>::lowest())
+    , m_bottom               (std::numeric_limits<PositionType>::max())
 {
     m_isPlayerStartLocation[0] = false;
     m_isPlayerStartLocation[1] = false;
     m_isPlayerOccupying[0] = false;
     m_isPlayerOccupying[1] = false;
 
-    CCPositionType resourceCenterX = 0;
-    CCPositionType resourceCenterY = 0;
+    PositionType resourceCenterX = 0;
+    PositionType resourceCenterY = 0;
 
     // add each of the resources to its corresponding container
     for (auto & resource : resources)
@@ -46,8 +46,8 @@ BaseLocation::BaseLocation(CCBot & bot, int baseID, const std::vector<Unit> & re
         }
 
         // set the limits of the base location bounding box
-        CCPositionType resWidth = Util::TileToPosition(1);
-        CCPositionType resHeight = Util::TileToPosition(0.5);
+        PositionType resWidth = Util::TileToPosition(1);
+        PositionType resHeight = Util::TileToPosition(0.5);
 
         m_left   = std::min(m_left,   resource.getPosition().x - resWidth);
         m_right  = std::max(m_right,  resource.getPosition().x + resWidth);
@@ -58,7 +58,7 @@ BaseLocation::BaseLocation(CCBot & bot, int baseID, const std::vector<Unit> & re
     // calculate the center of the resources
     size_t numResources = m_minerals.size() + m_geysers.size();
 
-    m_centerOfResources = CCPosition(m_left + (m_right-m_left)/2, m_top + (m_bottom-m_top)/2);
+    m_centerOfResources = Position(m_left + (m_right-m_left)/2, m_top + (m_bottom-m_top)/2);
 
     // compute this BaseLocation's DistanceMap, which will compute the ground distance
     // from the center of its recourses to every other tile on the map
@@ -98,7 +98,7 @@ BaseLocation::BaseLocation(CCBot & bot, int baseID, const std::vector<Unit> & re
         {
             // the build position will be up-left of where this tile is
             // this means we are positioning the center of the resouce depot
-            CCTilePosition buildTile(tile.x - offsetX, tile.y - offsetY);
+            TilePosition buildTile(tile.x - offsetX, tile.y - offsetY);
 
             if (m_bot.Map().canBuildTypeAtPosition(buildTile.x, buildTile.y, depot))
             {
@@ -110,12 +110,12 @@ BaseLocation::BaseLocation(CCBot & bot, int baseID, const std::vector<Unit> & re
 }
 
 // TODO: calculate the actual depot position
-const CCTilePosition & BaseLocation::getDepotPosition() const
+const TilePosition & BaseLocation::getDepotPosition() const
 {
     return m_depotPosition;
 }
 
-void BaseLocation::setPlayerOccupying(CCPlayer player, bool occupying)
+void BaseLocation::setPlayerOccupying(Player player, bool occupying)
 {
     m_isPlayerOccupying[player] = occupying;
 
@@ -128,12 +128,12 @@ void BaseLocation::setPlayerOccupying(CCPlayer player, bool occupying)
 
 bool BaseLocation::isInResourceBox(int tileX, int tileY) const
 {
-    CCPositionType px = Util::TileToPosition((float)tileX);
-    CCPositionType py = Util::TileToPosition((float)tileY);
+    PositionType px = Util::TileToPosition((float)tileX);
+    PositionType py = Util::TileToPosition((float)tileY);
     return px >= m_left && px < m_right && py < m_top && py >= m_bottom;
 }
 
-bool BaseLocation::isOccupiedByPlayer(CCPlayer player) const
+bool BaseLocation::isOccupiedByPlayer(Player player) const
 {
     return m_isPlayerOccupying.at(player);
 }
@@ -143,12 +143,12 @@ bool BaseLocation::isExplored() const
     return m_bot.Map().isExplored(m_centerOfResources);
 }
 
-bool BaseLocation::isPlayerStartLocation(CCPlayer player) const
+bool BaseLocation::isPlayerStartLocation(Player player) const
 {
     return m_isPlayerStartLocation.at(player);
 }
 
-bool BaseLocation::containsPosition(const CCPosition & pos) const
+bool BaseLocation::containsPosition(const Position & pos) const
 {
     if (!m_bot.Map().isValidPosition(pos) || (pos.x == 0 && pos.y == 0))
     {
@@ -168,17 +168,17 @@ const std::vector<Unit> & BaseLocation::getMinerals() const
     return m_minerals;
 }
 
-const CCPosition & BaseLocation::getPosition() const
+const Position & BaseLocation::getPosition() const
 {
     return m_centerOfResources;
 }
 
-int BaseLocation::getGroundDistance(const CCPosition & pos) const
+int BaseLocation::getGroundDistance(const Position & pos) const
 {
     return m_distanceMap.getDistance(pos);
 }
 
-int BaseLocation::getGroundDistance(const CCTilePosition & pos) const
+int BaseLocation::getGroundDistance(const TilePosition & pos) const
 {
     return m_distanceMap.getDistance(pos);
 }
@@ -188,16 +188,16 @@ bool BaseLocation::isStartLocation() const
     return m_isStartLocation;
 }
 
-const std::vector<CCTilePosition> & BaseLocation::getClosestTiles() const
+const std::vector<TilePosition> & BaseLocation::getClosestTiles() const
 {
     return m_distanceMap.getSortedTiles();
 }
 
 void BaseLocation::draw()
 {
-    CCPositionType radius = Util::TileToPosition(1.0f);
+    PositionType radius = Util::TileToPosition(1.0f);
 
-    m_bot.Map().drawCircle(m_centerOfResources, radius, CCColor(255, 255, 0));
+    m_bot.Map().drawCircle(m_centerOfResources, radius, Color(255, 255, 0));
 
     std::stringstream ss;
     ss << "BaseLocation: " << m_baseID << "\n";
@@ -216,38 +216,38 @@ void BaseLocation::draw()
         ss << "Enemy ";
     }
 
-    m_bot.Map().drawText(CCPosition(m_left, m_top+3), ss.str().c_str());
-    m_bot.Map().drawText(CCPosition(m_left, m_bottom), ss.str().c_str());
+    m_bot.Map().drawText(Position(m_left, m_top+3), ss.str().c_str());
+    m_bot.Map().drawText(Position(m_left, m_bottom), ss.str().c_str());
 
     // draw the base bounding box
     m_bot.Map().drawBox(m_left, m_top, m_right, m_bottom);
 
-    for (CCPositionType x=m_left; x < m_right; x += Util::TileToPosition(1.0f))
+    for (PositionType x=m_left; x < m_right; x += Util::TileToPosition(1.0f))
     {
-        //m_bot.Map().drawLine(x, m_top, x, m_bottom, CCColor(160, 160, 160));
+        //m_bot.Map().drawLine(x, m_top, x, m_bottom, Color(160, 160, 160));
     }
 
-    for (CCPositionType y=m_bottom; y<m_top; y += Util::TileToPosition(1.0f))
+    for (PositionType y=m_bottom; y<m_top; y += Util::TileToPosition(1.0f))
     {
-        //m_bot.Map().drawLine(m_left, y, m_right, y, CCColor(160, 160, 160));
+        //m_bot.Map().drawLine(m_left, y, m_right, y, Color(160, 160, 160));
     }
 
     for (auto & mineralPos : m_mineralPositions)
     {
-        m_bot.Map().drawCircle(mineralPos, radius, CCColor(0, 128, 128));
+        m_bot.Map().drawCircle(mineralPos, radius, Color(0, 128, 128));
     }
 
     for (auto & geyserPos : m_geyserPositions)
     {
-        m_bot.Map().drawCircle(geyserPos, radius, CCColor(0, 255, 0));
+        m_bot.Map().drawCircle(geyserPos, radius, Color(0, 255, 0));
     }
 
     if (m_isStartLocation)
     {
-        m_bot.Map().drawCircle(Util::GetPosition(m_depotPosition), radius, CCColor(255, 0, 0));
+        m_bot.Map().drawCircle(Util::GetPosition(m_depotPosition), radius, Color(255, 0, 0));
     }
 
-    m_bot.Map().drawTile(m_depotPosition.x, m_depotPosition.y, CCColor(0, 0, 255)); 
+    m_bot.Map().drawTile(m_depotPosition.x, m_depotPosition.y, Color(0, 0, 255)); 
 
     //m_distanceMap.draw(m_bot);
 }

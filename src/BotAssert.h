@@ -28,8 +28,7 @@
     #define BOT_ASSERT(cond, msg, ...) 
 #endif
 
-namespace Assert
-{
+namespace Assert {
     extern std::string lastErrorMessage;
 
     const std::string CurrentDateTime();

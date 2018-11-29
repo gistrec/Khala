@@ -1,8 +1,8 @@
 #include "ProductionManager.h"
 #include "Util.h"
-#include "CCBot.h"
+#include "Bot.h"
 
-ProductionManager::ProductionManager(CCBot & bot)
+ProductionManager::ProductionManager(Bot & bot)
     : m_bot             (bot)
     , m_buildingManager (bot)
     , m_queue           (bot)
@@ -158,7 +158,7 @@ void ProductionManager::fixBuildOrderDeadlock()
     }
 }
 
-Unit ProductionManager::getProducer(const MetaType & type, CCPosition closestTo)
+Unit ProductionManager::getProducer(const MetaType & type, Position closestTo)
 {
     // get all the types of units that cna build this type
     auto & producerTypes = m_bot.Data(type).whatBuilds;
@@ -184,7 +184,7 @@ Unit ProductionManager::getProducer(const MetaType & type, CCPosition closestTo)
     return getClosestUnitToPosition(candidateProducers, closestTo);
 }
 
-Unit ProductionManager::getClosestUnitToPosition(const std::vector<Unit> & units, CCPosition closestTo)
+Unit ProductionManager::getClosestUnitToPosition(const std::vector<Unit> & units, Position closestTo)
 {
     if (units.size() == 0)
     {
@@ -320,5 +320,5 @@ void ProductionManager::drawProductionInformation()
 
     ss << m_queue.getQueueInformation();
 
-    m_bot.Map().drawTextScreen(0.01f, 0.01f, ss.str(), CCColor(255, 255, 0));
+    m_bot.Map().drawTextScreen(0.01f, 0.01f, ss.str(), Color(255, 255, 0));
 }

@@ -3,11 +3,11 @@
 #include "WorkerData.h"
 
 class Building;
-class CCBot;
+class Bot;
 
 class WorkerManager
 {
-    CCBot & m_bot;
+    Bot & m_bot;
 
     mutable WorkerData  m_workerData;
     Unit m_previousClosestWorker;
@@ -20,7 +20,7 @@ class WorkerManager
 
 public:
 
-    WorkerManager(CCBot & bot);
+    WorkerManager(Bot & bot);
 
     void onStart();
     void onFrame();
@@ -43,6 +43,6 @@ public:
     Unit getBuilder(Building & b,bool setJobAsBuilder = true) const;
     Unit getClosestDepot(Unit worker) const;
     Unit getGasWorker(Unit refinery) const;
-    Unit getClosestMineralWorkerTo(const CCPosition & pos) const;
+    Unit getClosestMineralWorkerTo(const Position & pos) const;
 };
 

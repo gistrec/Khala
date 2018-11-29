@@ -3,12 +3,12 @@
 #include "Common.h"
 #include "BuildingData.h"
 
-class CCBot;
+class Bot;
 class BaseLocation;
 
 class BuildingPlacer
 {
-    CCBot & m_bot;
+    Bot & m_bot;
 
     std::vector< std::vector<bool> > m_reserveMap;
 
@@ -21,7 +21,7 @@ class BuildingPlacer
 
 public:
 
-    BuildingPlacer(CCBot & bot);
+    BuildingPlacer(Bot & bot);
 
     void onStart();
 
@@ -30,11 +30,11 @@ public:
     bool canBuildHereWithSpace(int bx, int by, const Building & b, int buildDist) const;
 
     // returns a build location near a building's desired location
-    CCTilePosition getBuildLocationNear(const Building & b, int buildDist) const;
+    TilePosition getBuildLocationNear(const Building & b, int buildDist) const;
 
     void drawReservedTiles();
 
     void reserveTiles(int x, int y, int width, int height);
     void freeTiles(int x, int y, int width, int height);
-    CCTilePosition getRefineryPosition();
+    TilePosition getRefineryPosition();
 };

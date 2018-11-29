@@ -2,11 +2,11 @@
 
 #include "BaseLocation.h"
 
-class CCBot;
+class Bot;
 
 class BaseLocationManager
 {
-    CCBot & m_bot;
+    Bot & m_bot;
 
     std::vector<BaseLocation>                       m_baseLocationData;
     std::vector<const BaseLocation *>               m_baseLocationPtrs;
@@ -15,11 +15,11 @@ class BaseLocationManager
     std::map<int, std::set<const BaseLocation *>>   m_occupiedBaseLocations;
     std::vector<std::vector<BaseLocation *>>        m_tileBaseLocations;
 
-    BaseLocation * getBaseLocation(const CCPosition & pos) const;
+    BaseLocation * getBaseLocation(const Position & pos) const;
 
 public:
 
-    BaseLocationManager(CCBot & bot);
+    BaseLocationManager(Bot & bot);
     
     void onStart();
     void onFrame();
@@ -30,6 +30,6 @@ public:
     const std::set<const BaseLocation *> & getOccupiedBaseLocations(int player) const;
     const BaseLocation * getPlayerStartingBaseLocation(int player) const;
     
-    CCTilePosition getNextExpansion(int player) const;
+    TilePosition getNextExpansion(int player) const;
 
 };

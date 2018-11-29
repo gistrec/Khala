@@ -1,8 +1,8 @@
 #include "GameCommander.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Util.h"
 
-GameCommander::GameCommander(CCBot & bot)
+GameCommander::GameCommander(Bot & bot)
     : m_bot                 (bot)
     , m_productionManager   (bot)
     , m_scoutManager        (bot)

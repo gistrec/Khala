@@ -2,7 +2,7 @@
 
 #include "Common.h"
 
-class CCBot;
+class Bot;
 
 namespace ConditionTypes
 {
@@ -16,7 +16,7 @@ namespace ConditionOperators
 
 class Condition
 {
-    CCBot *     m_bot;
+    Bot *     m_bot;
     int         m_type;
     int         m_player;
     Condition * m_lhs;
@@ -33,7 +33,7 @@ class Condition
 public:
 
     Condition();
-    Condition(const json & j, CCBot & bot);
+    Condition(const json & j, Bot & bot);
     
     bool eval() const;
     int intEval() const;

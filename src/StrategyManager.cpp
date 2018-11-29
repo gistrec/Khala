@@ -1,5 +1,5 @@
 #include "StrategyManager.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "JSONTools.h"
 #include "Util.h"
 #include "MetaType.h"
@@ -9,7 +9,7 @@ Strategy::Strategy()
 
 }
 
-Strategy::Strategy(const std::string & name, const CCRace & race, const BuildOrder & buildOrder, const Condition & scoutCondition, const Condition & attackCondition)
+Strategy::Strategy(const std::string & name, const Race & race, const BuildOrder & buildOrder, const Condition & scoutCondition, const Condition & attackCondition)
     : m_name            (name)
     , m_race            (race)
     , m_buildOrder      (buildOrder)
@@ -22,7 +22,7 @@ Strategy::Strategy(const std::string & name, const CCRace & race, const BuildOrd
 }
 
 // constructor
-StrategyManager::StrategyManager(CCBot & bot)
+StrategyManager::StrategyManager(Bot & bot)
     : m_bot(bot)
 {
 
@@ -100,7 +100,7 @@ void StrategyManager::onEnd(const bool isWinner)
 
 void StrategyManager::readStrategyFile(const std::string & filename)
 {
-    CCRace race = m_bot.GetPlayerRace(Players::Self);
+    Race race = m_bot.GetPlayerRace(Players::Self);
     std::string ourRace = Util::GetStringFromRace(race);
 
     std::ifstream file(filename);
@@ -157,7 +157,7 @@ void StrategyManager::readStrategyFile(const std::string & filename)
                 const json & val = it.value();              
                 
                 BOT_ASSERT(val.count("Race") && val["Race"].is_string(), "Strategy is missing a Race string");
-                CCRace strategyRace = Util::GetRaceFromString(val["Race"].get<std::string>());
+                Race strategyRace = Util::GetRaceFromString(val["Race"].get<std::string>());
                 
                 BOT_ASSERT(val.count("OpeningBuildOrder") && val["OpeningBuildOrder"].is_array(), "Strategy is missing an OpeningBuildOrder arrau");
                 BuildOrder buildOrder;

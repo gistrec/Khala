@@ -3,13 +3,13 @@
 #include "Common.h"
 #include "MicroManager.h"
 
-class CCBot;
+class Bot;
 
 class RangedManager: public MicroManager
 {
 public:
 
-    RangedManager(CCBot & bot);
+    RangedManager(Bot & bot);
     void    executeMicro(const std::vector<Unit> & targets);
     void    assignTargets(const std::vector<Unit> & targets);
     int     getAttackPriority(const Unit & rangedUnit, const Unit & target);

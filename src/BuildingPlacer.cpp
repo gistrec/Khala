@@ -1,10 +1,10 @@
 #include "Common.h"
 #include "BuildingPlacer.h"
-#include "CCBot.h"
+#include "Bot.h"
 #include "Building.h"
 #include "Util.h"
 
-BuildingPlacer::BuildingPlacer(CCBot & bot)
+BuildingPlacer::BuildingPlacer(Bot & bot)
     : m_bot(bot)
 {
 
@@ -98,7 +98,7 @@ bool BuildingPlacer::canBuildHereWithSpace(int bx, int by, const Building & b, i
     return true;
 }
 
-CCTilePosition BuildingPlacer::getBuildLocationNear(const Building & b, int buildDist) const
+TilePosition BuildingPlacer::getBuildLocationNear(const Building & b, int buildDist) const
 {
     Timer t;
     t.start();
@@ -125,7 +125,7 @@ CCTilePosition BuildingPlacer::getBuildLocationNear(const Building & b, int buil
     double ms = t.getElapsedTimeInMilliSec();
     //printf("Building Placer Failure: %s - Took %lf ms\n", b.type.getName().c_str(), ms);
 
-    return CCTilePosition(0, 0);
+    return TilePosition(0, 0);
 }
 
 bool BuildingPlacer::tileOverlapsBaseLocation(int x, int y, UnitType type) const
@@ -207,7 +207,7 @@ void BuildingPlacer::drawReservedTiles()
         {
             if (m_reserveMap[x][y] || isInResourceBox(x, y))
             {
-                m_bot.Map().drawTile(x, y, CCColor(255, 255, 0));
+                m_bot.Map().drawTile(x, y, Color(255, 255, 0));
             }
         }
     }
@@ -227,11 +227,11 @@ void BuildingPlacer::freeTiles(int bx, int by, int width, int height)
     }
 }
 
-CCTilePosition BuildingPlacer::getRefineryPosition()
+TilePosition BuildingPlacer::getRefineryPosition()
 {
-    CCPosition closestGeyser(0, 0);
+    Position closestGeyser(0, 0);
     double minGeyserDistanceFromHome = std::numeric_limits<double>::max();
-    CCPosition homePosition = m_bot.GetStartLocation();
+    Position homePosition = m_bot.GetStartLocation();
 
     for (auto & unit : m_bot.GetUnits())
     {
@@ -240,7 +240,7 @@ CCTilePosition BuildingPlacer::getRefineryPosition()
             continue;
         }
 
-        CCPosition geyserPos(unit.getPosition());
+        Position geyserPos(unit.getPosition());
 
         // check to see if it's next to one of our depots
         bool nearDepot = false;
@@ -264,7 +264,7 @@ CCTilePosition BuildingPlacer::getRefineryPosition()
         }
     }
 
-    return CCTilePosition((int)closestGeyser.x, (int)closestGeyser.y);
+    return TilePosition((int)closestGeyser.x, (int)closestGeyser.y);
 }
 
 bool BuildingPlacer::isReserved(int x, int y) const
