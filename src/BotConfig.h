@@ -2,63 +2,52 @@
 
 #include "Common.h"
 
-class BotConfig
-{
+/**
+ * Конфиг бота
+ * TODO: Добавить описание
+ */
+class BotConfig {
 
 public:
+	bool UsingAutoObserver = true;
+    
+    std::string BotName = "Khala";
+    std::string Authors = "Alex Frost";
+    bool PrintInfoOnStart = false;
 
-    bool ConfigFileFound;
-    bool ConfigFileParsed;
-    std::string ConfigFileLocation;
-        
-    bool UsingAutoObserver;		
+    int SetLocalSpeed = 10;
+    int SetFrameSkip = 0;
+    bool UserInput = true;
+    bool CompleteMapInformation = false;
     
-    std::string BotName;
-    std::string Authors;
-    bool PrintInfoOnStart;
-    std::string BotMode;
-
-    int SetLocalSpeed;
-    int SetFrameSkip;
-    bool UserInput;
-    bool CompleteMapInformation;
+    bool DrawGameInfo  = true;
+    bool DrawTileInfo  = false;
+	bool DrawSquadInfo = false;
+    bool DrawResourceInfo = false;
+    bool DrawScoutInfo    = false;
+    bool DrawWorkerInfo   = false;
+    bool DrawModuleTimers = false;
+	bool DrawBuildingInfo = false;
+	bool DrawSelfUnitInfo = false;
+	bool DrawEnemyUnitInfo   = false;
+	bool DrawUnitTargetInfo  = false;
+	bool DrawProductionInfo  = false;
+	bool DrawWalkableSectors = false;
+	bool DrawLastSeenTileInfo = false;
+	bool DrawBaseLocationInfo = false;
+    bool DrawReservedBuildingTile = false;
     
-    std::string StrategyName;
-    std::string ReadDir;
-    std::string WriteDir;
-    bool UseEnemySpecificStrategy;
-    bool FoundEnemySpecificStrategy;
+    Color ColorLineTarget       = Color(255, 255, 255);
+    Color ColorLineMineral      = Color(0, 128, 128);
+    Color ColorUnitNearEnemy    = Color(255, 0, 0);
+    Color ColorUnitNotNearEnemy = Color(0, 255, 0);
     
-    bool DrawGameInfo;
-    bool DrawTileInfo;
-    bool DrawBaseLocationInfo;
-    bool DrawWalkableSectors;
-    bool DrawResourceInfo;
-    bool DrawProductionInfo;
-    bool DrawScoutInfo;
-    bool DrawWorkerInfo;
-    bool DrawModuleTimers;
-    bool DrawReservedBuildingTiles;
-    bool DrawBuildingInfo;
-	bool DrawSelfUnitInfo;
-	bool DrawEnemyUnitInfo;
-    bool DrawLastSeenTileInfo;
-    bool DrawUnitTargetInfo;
-    bool DrawSquadInfo;		
+    bool KiteWithRangedUnits = true;    
+    bool ScoutHarassEnemy    = true;
     
-    Color ColorLineTarget;
-    Color ColorLineMineral;
-    Color ColorUnitNearEnemy;
-    Color ColorUnitNotNearEnemy;
-    
-    bool KiteWithRangedUnits;    
-    bool ScoutHarassEnemy;
-    
-    int WorkersPerRefinery;
-    int BuildingSpacing;
-    int PylonSpacing;
+    int WorkersPerRefinery = 3;
+    int BuildingSpacing    = 1;
+    int PylonSpacing       = 3;
  
-    BotConfig();
-
-    void readConfigFile();
+    BotConfig() = default;
 };
